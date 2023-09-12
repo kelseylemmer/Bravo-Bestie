@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { ApplicationViews } from "./views/ApplicationViews"
-// import { NavBar } from "./components/nav/NavBar"
+import { NavBar } from "./components/nav/NavBar"
 
 
 export const BravoBestie = () => {
@@ -12,7 +12,7 @@ export const BravoBestie = () => {
   }
 
   return <>
-    {/* <NavBar token={token} setToken={setToken} /> */}
+    <NavBar token={token} setToken={setToken} />
     <ApplicationViews token={token} setToken={setToken} />
   </>
 }

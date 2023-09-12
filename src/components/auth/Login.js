@@ -11,8 +11,6 @@ export const Login = ({ setToken }) => {
   const handleLogin = (e) => {
     e.preventDefault()
 
-    // Check if 'email' and 'password' refs are correctly assigned
-    console.log(email.current.value); // Make sure this prints the email entered by the user
 
     const user = {
       email: email.current.value,
