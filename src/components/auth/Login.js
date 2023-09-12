@@ -6,10 +6,13 @@ export const Login = ({ setToken }) => {
   const email = useRef()
   const password = useRef()
   const navigate = useNavigate()
-  const [isUnsuccessful, setisUnsuccessful] = useState(false)
+  const [isUnsuccessful, setIsUnsuccessful] = useState(false)
 
   const handleLogin = (e) => {
     e.preventDefault()
+
+    // Check if 'email' and 'password' refs are correctly assigned
+    console.log(email.current.value); // Make sure this prints the email entered by the user
 
     const user = {
       email: email.current.value,
@@ -22,7 +25,7 @@ export const Login = ({ setToken }) => {
         navigate("/")
       }
       else {
-        setisUnsuccessful(true)
+        setIsUnsuccessful(true)
       }
     })
   }
@@ -36,7 +39,8 @@ export const Login = ({ setToken }) => {
         <div className="field">
           <label className="label">Email</label>
           <div className="control">
-            <input className="input" type="text" ref={email} />
+            {/* Make sure the ref is assigned to the input element */}
+            <input className="input" type="email" ref={email} />
           </div>
         </div>
 
@@ -49,7 +53,7 @@ export const Login = ({ setToken }) => {
 
         <div className="field is-grouped">
           <div className="control">
-            <button className="button is-link" type="submit" >Submit</button>
+            <button className="button is-link" type="submit">Submit</button>
           </div>
           <div className="control">
             <Link to="/register" className="button is-link is-light">Cancel</Link>
