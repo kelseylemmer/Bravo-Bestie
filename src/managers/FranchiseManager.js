@@ -9,3 +9,21 @@ export const getAllFranchises = () => {
   })
     .then(response => response.json());
 };
+
+export const getFranchiseById = (id) => {
+  return fetch(`http://localhost:8000/franchises/${id}`, {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
+    .then(response => response.json())
+}
+
+export const getSeasonByFranchise = (id) => {
+  return fetch(`http://localhost:8000/seasons?franchise=${id}`, {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
+    .then(response => response.json())
+}
