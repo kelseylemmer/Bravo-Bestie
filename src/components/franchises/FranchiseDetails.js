@@ -2,25 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
 
-
 export const FranchiseDetails = () => {
   const { id } = useParams();
   const [franchiseDetails, setFranchiseDetails] = useState({});
   const [seasons, setSeasons] = useState([]);
 
-
   useEffect(() => {
-    getFranchiseById(id).then(data => setFranchiseDetails(data))
-
+    getFranchiseById(id).then((data) => setFranchiseDetails(data));
   }, [id]);
 
-
   useEffect(() => {
-
-    getSeasonByFranchise(id)
-      .then(data => setSeasons(data))
-
+    getSeasonByFranchise(id).then((data) => setSeasons(data));
   }, []);
+
+  // Create a separate function to map over episodes
+  const renderEpisodes = (season) => {
+    const episodeList = [];
+    for (const episode of season.episodes) {
+      episodeList.push(
+        <li key={episode.id}>
+          <h3>Episode {episode.episode}: {episode.title}</h3>
+          <p>{episode.synopsis}</p>
+          <p>Air Date: {episode.air_date}</p>
+        </li>
+      );
+    }
+    return episodeList;
+  };
 
   return (
     <div className="franchise-details">
@@ -31,22 +39,13 @@ export const FranchiseDetails = () => {
         </div>
       </div>
       <div className="top-right">
-        {seasons.map(season => (
+        {seasons.map((season) => (
           <div key={season.id}>
             <h2>Season {season.season_number}</h2>
-            <ul>
-              {season.episodes.map(episode => (
-                <li key={episode.id}>
-                  <h3>Episode {episode.episode}</h3>
-                  <p>Title: {episode.title}</p>
-                  <p>Synopsis: {episode.synopsis}</p>
-                  <p>Air Date: {episode.air_date}</p>
-                </li>
-              ))}
-            </ul>
+            <ul>{renderEpisodes(season)}</ul>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
