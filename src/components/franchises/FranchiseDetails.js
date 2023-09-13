@@ -23,6 +23,10 @@ export const FranchiseDetails = ({ token }) => {
   }, [token]);
 
   useEffect(() => {
+    newProfileEpisodes()
+  }, []);
+
+  const newProfileEpisodes = () => {
     getCurrentUserEpisodes().then((data) => {
       const episodes = [];
       data.map((profileEpisode) => {
@@ -30,27 +34,30 @@ export const FranchiseDetails = ({ token }) => {
       });
       setProfileEpisodes(episodes);
     });
-  }, []);
+  }
 
 
   const addOrRemoveEpisode = (e) => {
-    const checkedEpisodeId = parseInt(e.target.value)
-    //loop to see if episode = checkedEpisodeId
+    const checkedEpisodeId = parseInt(e.target.value);
+    let foundMatch = false;
+
     for (const userProfileEpisode of userProfileEpisodes) {
-      if (userProfileEpisode.episode = checkedEpisodeId) {
-        deleteProfileEpisode(checkedEpisodeId)
-        profileEpisodes.push(checkedEpisodeId)
-
-      } else {
-        const newProfileEpisode = {
-          profile: userProfileEpisode.profile,
-          episode: checkedEpisodeId
-        }
-        createProfileEpisode(newProfileEpisode)
-
+      if (userProfileEpisode.episode === checkedEpisodeId) {
+        deleteProfileEpisode(userProfileEpisode.id);
+        newProfileEpisodes()
+        foundMatch = true;
+        break;
       }
     }
-  }
+    if (!foundMatch) {
+      const newProfileEpisode = {
+        episode: checkedEpisodeId,
+      };
+      createProfileEpisode(newProfileEpisode);
+      profileEpisodes.push(checkedEpisodeId);
+    }
+  };
+
 
   // Create a separate function to map over episodes
   const renderEpisodes = (season) => {
@@ -94,4 +101,3 @@ export const FranchiseDetails = ({ token }) => {
     </div>
   );
 };
-
