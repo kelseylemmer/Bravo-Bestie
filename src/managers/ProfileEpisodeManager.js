@@ -7,20 +7,9 @@ export const getCurrentUserEpisodes = (token) => {
     .then(response => response.json())
 }
 
+export const deleteProfileEpisode = (checkedEpisodeId) => {
 
-
-
-
-
-
-
-
-
-
-
-export const deleteProfileEpisodes = (VARIABLE) => {
-
-  return fetch("http://localhost:8000/profileEpisodes/VARIABLE", {
+  return fetch(`http://localhost:8000/profileEpisodes/${checkedEpisodeId}`, {
     method: "DELETE",
     headers: {
       "Authorization": `Token ${localStorage.getItem("auth_token")}`
@@ -28,7 +17,7 @@ export const deleteProfileEpisodes = (VARIABLE) => {
   })
 }
 
-export const createProfileEpisodes = (VARIABLE) => {
+export const createProfileEpisode = (VARIABLE) => {
 
   return fetch("http://localhost:8000/profileEpisodes", {
     method: "POST",
