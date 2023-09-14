@@ -47,10 +47,13 @@ export const NavBar = ({ token, setToken }) => {
               {
                 token
                   ?
-                  <button className="button is-outlined" onClick={() => {
-                    setToken('')
-                    navigate('/login')
-                  }}>Logout</button>
+                  <>
+                    <Link to="/myProfile" className="button is-outlined">My Profile</Link>
+                    <button className="button is-outlined" onClick={() => {
+                      setToken('')
+                      navigate('/login')
+                    }}>Logout</button>
+                  </>
                   :
                   <>
                     <Link to="/register" className="button is-link">Register</Link>

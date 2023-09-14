@@ -1,0 +1,8 @@
+.profile-pictures {
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  /* border:2px solid #276451 */
+  /* margin-top: 50px; */
+  filter: grayscale(100%);
+}

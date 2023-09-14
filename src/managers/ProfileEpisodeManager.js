@@ -1,4 +1,4 @@
-export const getCurrentUserEpisodes = (token) => {
+export const getCurrentUserEpisodes = () => {
   return fetch(`http://localhost:8000/profileEpisodes?current`, {
     headers: {
       "Authorization": `Token ${localStorage.getItem("auth_token")}`
@@ -17,7 +17,7 @@ export const deleteProfileEpisode = (checkedEpisodeId) => {
   })
 }
 
-export const createProfileEpisode = (VARIABLE) => {
+export const createProfileEpisode = (newProfileEpisode) => {
 
   return fetch("http://localhost:8000/profileEpisodes", {
     method: "POST",
@@ -26,6 +26,6 @@ export const createProfileEpisode = (VARIABLE) => {
       "Accept": "application/json",
       "Authorization": `Token ${localStorage.getItem("auth_token")}`
     },
-    body: JSON.stringify(VARIABLE)
+    body: JSON.stringify(newProfileEpisode)
   }).then(res => res.json())
 }

@@ -8,7 +8,7 @@ export const FranchiseDetails = ({ token }) => {
   const [franchiseDetails, setFranchiseDetails] = useState({});
   const [seasons, setSeasons] = useState([]);
   const [userProfileEpisodes, setUserProfileEpisodes] = useState([])
-  const [profileEpisodes, setProfileEpisodes] = useState([])
+  const [profileEpisodeList, setProfileEpisodeList] = useState([])
 
   useEffect(() => {
     getFranchiseById(id).then((data) => setFranchiseDetails(data));
@@ -19,8 +19,8 @@ export const FranchiseDetails = ({ token }) => {
   }, []);
 
   useEffect(() => {
-    getCurrentUserEpisodes(token).then((data) => setUserProfileEpisodes(data));
-  }, [token]);
+    newUserProfileEpisodes()
+  }, []);
 
   useEffect(() => {
     newProfileEpisodes()
@@ -32,31 +32,58 @@ export const FranchiseDetails = ({ token }) => {
       data.map((profileEpisode) => {
         episodes.push(profileEpisode.episode);
       });
-      setProfileEpisodes(episodes);
+      setProfileEpisodeList(episodes);
     });
   }
 
+  const newUserProfileEpisodes = () => {
+    getCurrentUserEpisodes().then((data) => setUserProfileEpisodes(data));
+  }
 
   const addOrRemoveEpisode = (e) => {
-    const checkedEpisodeId = parseInt(e.target.value);
-    let foundMatch = false;
-
-    for (const userProfileEpisode of userProfileEpisodes) {
-      if (userProfileEpisode.episode === checkedEpisodeId) {
-        deleteProfileEpisode(userProfileEpisode.id);
-        newProfileEpisodes()
-        foundMatch = true;
-        break;
-      }
-    }
-    if (!foundMatch) {
+    const checkedEpisodeId = parseInt(e.target.value)
+    console.log("checkedEpisodeId", checkedEpisodeId)
+    if (profileEpisodeList.includes(checkedEpisodeId)) {
+      const updatedEpisodes = profileEpisodeList.filter(episodeId => episodeId !== checkedEpisodeId)
+      setProfileEpisodeList(updatedEpisodes)
+      deleteProfileEpisode(checkedEpisodeId)
+      newUserProfileEpisodes()
+    } else {
+      const copy = [...profileEpisodeList]
       const newProfileEpisode = {
         episode: checkedEpisodeId,
       };
-      createProfileEpisode(newProfileEpisode);
-      profileEpisodes.push(checkedEpisodeId);
+      copy.push(checkedEpisodeId)
+      setProfileEpisodeList(copy)
+      createProfileEpisode(newProfileEpisode)
+      newUserProfileEpisodes()
     }
-  };
+  }
+
+
+  // const addOrRemoveEpisode = (e) => {
+  //   const checkedEpisodeId = parseInt(e.target.value);
+  //   let foundMatch = false;
+
+  //   for (const userProfileEpisode of userProfileEpisodes) {
+  //     if (userProfileEpisode.episode === checkedEpisodeId) {
+  //       deleteProfileEpisode(userProfileEpisode.id);
+  //       newUserProfileEpisodes()
+  //       newProfileEpisodes()
+  //       foundMatch = true;
+  //       break;
+  //     }
+  //   }
+  //   if (foundMatch = false) {
+  //     console.log(checkedEpisodeId)
+  //     const newProfileEpisode = {
+  //       episode: checkedEpisodeId,
+  //     };
+  //     createProfileEpisode(newProfileEpisode);
+  //     profileEpisodeList.push(checkedEpisodeId);
+
+  //   }
+  // };
 
 
   // Create a separate function to map over episodes
@@ -69,7 +96,7 @@ export const FranchiseDetails = ({ token }) => {
             <input
               type="checkbox"
               value={episode.id}
-              checked={profileEpisodes.includes(episode.id)}
+              checked={profileEpisodeList.includes(episode.id)}
               onChange={(e) => addOrRemoveEpisode(e)}
             />
             <h3>Episode {episode.episode}: {episode.title}</h3>
