@@ -97,6 +97,7 @@ export const ProfileDetails = ({ token }) => {
       <div className="header">
         <h2>{profile.display_name}</h2>
         <img src={profile.picture} alt="profile picture" className="profile-pictures" />
+        <div>Favorite franchise: {profile?.favorite_franchise?.label}</div>
         <button className="btn btn-2 btn-sep icon-create"
           onClick={() => {
             navigate({ pathname: "/myProfile/edit" })
