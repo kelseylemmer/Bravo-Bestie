@@ -97,7 +97,15 @@ export const ProfileDetails = ({ token }) => {
       <div className="header">
         <h2>{profile.display_name}</h2>
         <img src={profile.picture} alt="profile picture" className="profile-pictures" />
-        <div>Favorite franchise: {profile?.favorite_franchise?.label}</div>
+        <div>Favorite Franchise: {profile?.favorite_franchise?.label}</div>
+        <div>Episodes Watched:</div>
+        <div className="top-right">
+          {userProfileEpisodes.map((episodeItem) => (
+            <ul>
+              <li key={episodeItem.id}>{episodeItem?.episode?.season?.franchise?.label} Season {episodeItem?.episode?.season?.season_number} Episode {episodeItem?.episode?.episode}: {episodeItem?.episode?.title} </li>
+            </ul>
+          ))}
+        </div>
         <button className="btn btn-2 btn-sep icon-create"
           onClick={() => {
             navigate({ pathname: "/myProfile/edit" })

@@ -30,7 +30,7 @@ export const FranchiseDetails = ({ token }) => {
     getCurrentUserEpisodes().then((data) => {
       const episodes = [];
       data.map((profileEpisode) => {
-        episodes.push(profileEpisode.episode);
+        episodes.push(profileEpisode.episode.id);
       });
       setProfileEpisodeList(episodes);
     });
