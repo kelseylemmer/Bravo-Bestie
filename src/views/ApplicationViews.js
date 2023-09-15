@@ -6,6 +6,8 @@ import { Authorized } from "./Authorized";
 import { FranchiseDetails } from "../components/franchises/FranchiseDetails";
 import { ProfileDetails } from "../components/profile/ProfileView";
 import { EditProfile } from "../components/profile/EditProfile";
+import { FranchiseList } from "../components/franchises/FranchiseList";
+
 
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -19,7 +21,10 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/register" element={<Register setToken={setToken} />} />
 
         <Route element={<Authorized />} >
-          <Route exact path="/franchises/:id" element={<FranchiseDetails token={token} />} />
+          <Route path="/franchises">
+            <Route index element={<FranchiseList />} />
+            <Route path=":id" element={<FranchiseDetails token={token} />} />
+          </Route>
           <Route path="/myProfile">
             <Route index element={<ProfileDetails token={token} />} />
             <Route path="edit" element={<EditProfile token={token} setToken={setToken} />} />

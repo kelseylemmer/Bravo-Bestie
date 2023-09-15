@@ -8,7 +8,7 @@ export const FranchiseDetails = ({ token }) => {
   const [franchiseDetails, setFranchiseDetails] = useState({});
   const [seasons, setSeasons] = useState([]);
   const [userProfileEpisodes, setUserProfileEpisodes] = useState([])
-  const [profileEpisodeList, setProfileEpisodeList] = useState([])
+  const [episodeKeys, setEpisodeKeys] = useState([])
 
   useEffect(() => {
     getFranchiseById(id).then((data) => setFranchiseDetails(data));
@@ -32,7 +32,7 @@ export const FranchiseDetails = ({ token }) => {
       data.map((profileEpisode) => {
         episodes.push(profileEpisode.episode.id);
       });
-      setProfileEpisodeList(episodes);
+      setEpisodeKeys(episodes);
     });
   }
 
@@ -43,18 +43,18 @@ export const FranchiseDetails = ({ token }) => {
   const addOrRemoveEpisode = (e) => {
     const checkedEpisodeId = parseInt(e.target.value)
     console.log("checkedEpisodeId", checkedEpisodeId)
-    if (profileEpisodeList.includes(checkedEpisodeId)) {
-      const updatedEpisodes = profileEpisodeList.filter(episodeId => episodeId !== checkedEpisodeId)
-      setProfileEpisodeList(updatedEpisodes)
+    if (episodeKeys.includes(checkedEpisodeId)) {
+      const updatedEpisodes = episodeKeys.filter(episodeId => episodeId !== checkedEpisodeId)
+      setEpisodeKeys(updatedEpisodes)
       deleteProfileEpisode(checkedEpisodeId)
       newUserProfileEpisodes()
     } else {
-      const copy = [...profileEpisodeList]
+      const copy = [...episodeKeys]
       const newProfileEpisode = {
         episode: checkedEpisodeId,
       };
       copy.push(checkedEpisodeId)
-      setProfileEpisodeList(copy)
+      setEpisodeKeys(copy)
       createProfileEpisode(newProfileEpisode)
       newUserProfileEpisodes()
     }
@@ -80,7 +80,7 @@ export const FranchiseDetails = ({ token }) => {
   //       episode: checkedEpisodeId,
   //     };
   //     createProfileEpisode(newProfileEpisode);
-  //     profileEpisodeList.push(checkedEpisodeId);
+  //     episodeKeys.push(checkedEpisodeId);
 
   //   }
   // };
@@ -96,7 +96,7 @@ export const FranchiseDetails = ({ token }) => {
             <input
               type="checkbox"
               value={episode.id}
-              checked={profileEpisodeList.includes(episode.id)}
+              checked={episodeKeys.includes(episode.id)}
               onChange={(e) => addOrRemoveEpisode(e)}
             />
             <h3>Episode {episode.episode}: {episode.title}</h3>
@@ -113,17 +113,19 @@ export const FranchiseDetails = ({ token }) => {
     <div className="franchise-details">
       <div className="header">
         <h2>{franchiseDetails.label}</h2>
-        <div className="top-left">
+      </div>
+      <div className="top-container">
+        <div className="top-left-franchise">
           <img src={franchiseDetails?.image} alt="franchise picture" className="franchise-pic" />
         </div>
-      </div>
-      <div className="top-right">
-        {seasons.map((season) => (
-          <div key={season.id}>
-            <h2>Season {season.season_number}</h2>
-            <ul>{renderEpisodes(season)}</ul>
-          </div>
-        ))}
+        <div className="top-right-franchise">
+          {seasons.map((season) => (
+            <div key={season.id}>
+              <h2>Season {season.season_number}</h2>
+              <ul>{renderEpisodes(season)}</ul>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

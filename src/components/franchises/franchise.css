@@ -1,0 +1,43 @@
+.franchise-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Adjust the number of columns as needed */
+  gap: 20px;
+  /* Adjust the gap between items as needed */
+}
+
+.franchise-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.franchise-pics-container {
+  margin-bottom: 10px;
+}
+
+.franchise-pics {
+  width: auto;
+  max-height: 300px;
+  border-radius: 20px;
+}
+
+.franchise-pic {
+  width: auto;
+  height: 600px;
+}
+
+.top-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
+.top-right-franchise {
+  border: 1px solid #000;
+  height: 600px;
+  width: 600px;
+  overflow-y: scroll;
+}
