@@ -20,7 +20,7 @@ export const FranchiseList = () => {
       <div className="header">
         <h2>All Shows</h2>
         <div className="franchise-list">
-          {franchiseList.map((franchise, index) => (
+          {franchiseList.map((franchise) => (
             <section className="franchise-item" key={franchise.id}>
               <Link to={`/franchises/${franchise.id}`}>
                 <div className="franchise-item-container">
