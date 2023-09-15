@@ -20,7 +20,7 @@ export const FranchiseDetails = ({ token }) => {
 
   useEffect(() => {
     newUserProfileEpisodes()
-  }, []);
+  }, [userProfileEpisodes]);
 
   useEffect(() => {
     newProfileEpisodes()
@@ -40,28 +40,55 @@ export const FranchiseDetails = ({ token }) => {
     getCurrentUserEpisodes().then((data) => setUserProfileEpisodes(data));
   }
 
+  // const addOrRemoveEpisode = (e) => {
+  //   const checkedEpisodeId = parseInt(e.target.value)
+  //   console.log("checkedEpisodeId", checkedEpisodeId)
+  //   if (episodeKeys.includes(checkedEpisodeId)) {
+  //     const updatedEpisodes = episodeKeys.filter(episodeId => episodeId !== checkedEpisodeId)
+  //     setEpisodeKeys(updatedEpisodes)
+  //     deleteProfileEpisode(checkedEpisodeId)
+  //     newUserProfileEpisodes()
+  //   } else {
+  //     const copy = [...episodeKeys]
+  //     const newProfileEpisode = {
+  //       episode: checkedEpisodeId,
+  //     };
+  //     copy.push(checkedEpisodeId)
+  //     setEpisodeKeys(copy)
+  //     createProfileEpisode(newProfileEpisode)
+  //     newUserProfileEpisodes()
+  //   }
+  // }
+
   const addOrRemoveEpisode = (e) => {
-    const checkedEpisodeId = parseInt(e.target.value)
-    console.log("checkedEpisodeId", checkedEpisodeId)
-    if (episodeKeys.includes(checkedEpisodeId)) {
-      const updatedEpisodes = episodeKeys.filter(episodeId => episodeId !== checkedEpisodeId)
-      setEpisodeKeys(updatedEpisodes)
-      deleteProfileEpisode(checkedEpisodeId)
-      newUserProfileEpisodes()
-    } else {
-      const copy = [...episodeKeys]
+    const checkedEpisodeId = parseInt(e.target.value);
+    //what is the current state of this checkbox - checked or unchecked
+    if (e.target.checked) {
+      //if checked POST request to API with : current profile id and episode id
       const newProfileEpisode = {
         episode: checkedEpisodeId,
       };
-      copy.push(checkedEpisodeId)
-      setEpisodeKeys(copy)
+      //fetch all profile episodes and update state variable
       createProfileEpisode(newProfileEpisode)
       newUserProfileEpisodes()
+      newProfileEpisodes()
+    } else {
+      //if unchecked DELETE operation to API and send pk ----HOW DO WE GET THE PK!!!!!!!!!!!!!!!!!!!!!
+      for (const userProfileEpisode of userProfileEpisodes) {
+        if (userProfileEpisode.episode.id === checkedEpisodeId) {
+          deleteProfileEpisode(userProfileEpisode.id);
+          //fetch all profile episodes and update state
+          newUserProfileEpisodes()
+          newProfileEpisodes()
+        }
+      }
     }
   }
 
 
-  // const addOrRemoveEpisode = (e) => {
+
+
+
   //   const checkedEpisodeId = parseInt(e.target.value);
   //   let foundMatch = false;
 
@@ -83,7 +110,8 @@ export const FranchiseDetails = ({ token }) => {
   //     episodeKeys.push(checkedEpisodeId);
 
   //   }
-  // };
+
+  // }
 
 
   // Create a separate function to map over episodes
