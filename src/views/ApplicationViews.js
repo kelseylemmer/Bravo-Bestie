@@ -7,6 +7,7 @@ import { FranchiseDetails } from "../components/franchises/FranchiseDetails";
 import { ProfileDetails } from "../components/profile/ProfileView";
 import { EditProfile } from "../components/profile/EditProfile";
 import { FranchiseList } from "../components/franchises/FranchiseList";
+import { Home } from "../components/home/home";
 
 
 
@@ -17,10 +18,10 @@ export const ApplicationViews = ({ token, setToken }) => {
     <>
       <Routes>
         <Route path="/login" element={<Login setToken={setToken} />} />
-        {/* <Route path="/" element={<Login setToken={setToken} />} /> */}
         <Route path="/register" element={<Register setToken={setToken} />} />
 
         <Route element={<Authorized />} >
+          <Route path="/" element={<Home token={token} />} />
           <Route path="/franchises">
             <Route index element={<FranchiseList />} />
             <Route path=":id" element={<FranchiseDetails token={token} />} />
