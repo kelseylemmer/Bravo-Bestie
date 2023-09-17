@@ -25,7 +25,7 @@ export const FranchiseList = () => {
               <Link to={`/franchises/${franchise.id}`}>
                 <div className="franchise-item-container">
                   <div className="franchise-pics-container">
-                    <img src={franchise?.image} alt="franchise-photo" className="franchise-pics" />
+                    <img src={franchise?.list_image} alt="franchise-photo" className="franchise-pics" />
                   </div>
                   <div className="franchise-label">{franchise.label}</div>
                 </div>

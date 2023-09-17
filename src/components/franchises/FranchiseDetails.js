@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
 import { createProfileEpisode, deleteProfileEpisode, getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
+import { Container, Grid, Paper, Typography, Checkbox, FormControlLabel } from "@mui/material"; // Import Material-UI components
 
 export const FranchiseDetails = ({ token }) => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export const FranchiseDetails = ({ token }) => {
 
   useEffect(() => {
     newUserProfileEpisodes()
-  }, [userProfileEpisodes]);
+  }, []);
 
   useEffect(() => {
     newProfileEpisodes()
@@ -39,26 +40,6 @@ export const FranchiseDetails = ({ token }) => {
   const newUserProfileEpisodes = () => {
     getCurrentUserEpisodes().then((data) => setUserProfileEpisodes(data));
   }
-
-  // const addOrRemoveEpisode = (e) => {
-  //   const checkedEpisodeId = parseInt(e.target.value)
-  //   console.log("checkedEpisodeId", checkedEpisodeId)
-  //   if (episodeKeys.includes(checkedEpisodeId)) {
-  //     const updatedEpisodes = episodeKeys.filter(episodeId => episodeId !== checkedEpisodeId)
-  //     setEpisodeKeys(updatedEpisodes)
-  //     deleteProfileEpisode(checkedEpisodeId)
-  //     newUserProfileEpisodes()
-  //   } else {
-  //     const copy = [...episodeKeys]
-  //     const newProfileEpisode = {
-  //       episode: checkedEpisodeId,
-  //     };
-  //     copy.push(checkedEpisodeId)
-  //     setEpisodeKeys(copy)
-  //     createProfileEpisode(newProfileEpisode)
-  //     newUserProfileEpisodes()
-  //   }
-  // }
 
   const addOrRemoveEpisode = (e) => {
     const checkedEpisodeId = parseInt(e.target.value);
@@ -86,34 +67,6 @@ export const FranchiseDetails = ({ token }) => {
   }
 
 
-
-
-
-  //   const checkedEpisodeId = parseInt(e.target.value);
-  //   let foundMatch = false;
-
-  //   for (const userProfileEpisode of userProfileEpisodes) {
-  //     if (userProfileEpisode.episode === checkedEpisodeId) {
-  //       deleteProfileEpisode(userProfileEpisode.id);
-  //       newUserProfileEpisodes()
-  //       newProfileEpisodes()
-  //       foundMatch = true;
-  //       break;
-  //     }
-  //   }
-  //   if (foundMatch = false) {
-  //     console.log(checkedEpisodeId)
-  //     const newProfileEpisode = {
-  //       episode: checkedEpisodeId,
-  //     };
-  //     createProfileEpisode(newProfileEpisode);
-  //     episodeKeys.push(checkedEpisodeId);
-
-  //   }
-
-  // }
-
-
   // Create a separate function to map over episodes
   const renderEpisodes = (season) => {
     const episodeList = [];
@@ -137,24 +90,30 @@ export const FranchiseDetails = ({ token }) => {
     return episodeList;
   };
 
+
   return (
-    <div className="franchise-details">
-      <div className="header">
-        <h2>{franchiseDetails.label}</h2>
-      </div>
-      <div className="top-container">
-        <div className="top-left-franchise">
-          <img src={franchiseDetails?.image} alt="franchise picture" className="franchise-pic" />
-        </div>
-        <div className="top-right-franchise">
-          {seasons.map((season) => (
-            <div key={season.id}>
-              <h2>Season {season.season_number}</h2>
-              <ul>{renderEpisodes(season)}</ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <Container maxWidth="lg" className="franchise-details">
+      <Grid container spacing={3} alignItems="flex-start"> {/* Add alignItems="flex-start" */}
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} className="franchise-pic">
+            <img src={franchiseDetails?.list_image} alt="franchise picture" style={{ width: "100%" }} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Typography variant="h2">{franchiseDetails.label}</Typography>
+          <Paper style={{
+            height: "400px", overflow: "auto", border: "2px solid #ccc", borderRadius: "10px", padding: "16px", scrollbarWidth: "thin", scrollbarColor: "#888 #555"
+          }}>
+            {seasons.map((season) => (
+              <div key={season.id}>
+                <Typography variant="h4">Season {season.season_number}</Typography>
+                {renderEpisodes(season)}
+              </div>
+            ))}
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
+
 };
