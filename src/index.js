@@ -6,6 +6,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
+
 
 
 
@@ -13,6 +15,8 @@ const container = document.getElementById("root")
 const root = createRoot(container)
 root.render(
   <BrowserRouter>
-    <BravoBestie />
+    <ScopedCssBaseline>
+      <BravoBestie />
+    </ScopedCssBaseline>
   </BrowserRouter>
 )

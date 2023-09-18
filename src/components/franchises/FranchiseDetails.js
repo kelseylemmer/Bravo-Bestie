@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
 import { createProfileEpisode, deleteProfileEpisode, getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
-import { Container, Grid, Paper, Typography, Checkbox, FormControlLabel } from "@mui/material"; // Import Material-UI components
+import { Container, Typography } from "@mui/material";
+
 
 export const FranchiseDetails = ({ token }) => {
   const { id } = useParams();
@@ -67,6 +68,7 @@ export const FranchiseDetails = ({ token }) => {
   }
 
 
+
   // Create a separate function to map over episodes
   const renderEpisodes = (season) => {
     const episodeList = [];
@@ -91,29 +93,23 @@ export const FranchiseDetails = ({ token }) => {
   };
 
 
+
   return (
-    <Container maxWidth="lg" className="franchise-details">
-      <Grid container spacing={3} alignItems="flex-start"> {/* Add alignItems="flex-start" */}
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} className="franchise-pic">
-            <img src={franchiseDetails?.list_image} alt="franchise picture" style={{ width: "100%" }} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Typography variant="h2">{franchiseDetails.label}</Typography>
-          <Paper style={{
-            height: "400px", overflow: "auto", border: "2px solid #ccc", borderRadius: "10px", padding: "16px", scrollbarWidth: "thin", scrollbarColor: "#888 #555"
-          }}>
-            {seasons.map((season) => (
-              <div key={season.id}>
-                <Typography variant="h4">Season {season.season_number}</Typography>
-                {renderEpisodes(season)}
-              </div>
-            ))}
-          </Paper>
-        </Grid>
-      </Grid>
-    </Container>
+    <div className="franchise-details">
+      <div style={{ width: "100%", overflowX: "scroll" }}>
+        <img src={franchiseDetails?.banner_image} alt="franchise picture" style={{ width: "100%" }} />
+      </div>
+      <div style={{ height: "600px", overflowY: "auto", border: "2px solid #ccc", borderRadius: "10px", padding: "16px", scrollbarWidth: "thin", scrollbarColor: "#888 #555" }}>
+        <Container maxWidth="lg">
+          {seasons.map((season) => (
+            <div key={season.id}>
+              <Typography variant="h4">Season {season.season_number}</Typography>
+              {renderEpisodes(season)}
+            </div>
+          ))}
+        </Container>
+      </div>
+    </div>
   );
 
 };

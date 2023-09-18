@@ -4,6 +4,7 @@ import { getFranchiseById, getSeasonByFranchise } from "../../managers/Franchise
 import { createProfileEpisode, deleteProfileEpisode, getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { getCurrentUserProfile } from "../../managers/ProfileManager";
 import "./profile.css";
+import { Button, Container, Typography } from "@mui/material";
 
 export const ProfileDetails = ({ token }) => {
   const { id } = useParams();
@@ -93,25 +94,25 @@ export const ProfileDetails = ({ token }) => {
   // };
 
   return (
-    <div className="Profile-details">
+    <Container>
       <div className="header">
-        <h2>{profile.display_name}</h2>
+        <Typography variant="h2" color="primary">{profile.display_name}</Typography>
         <img src={profile.picture} alt="profile picture" className="profile-pictures" />
-        <div>Favorite Franchise: {profile?.favorite_franchise?.label}</div>
-        <div>Episodes Watched:</div>
-        <div className="top-right">
+        <Typography variant="h5">Favorite Franchise: {profile?.favorite_franchise?.label}</Typography>
+        <Typography variant="h5">Episodes Watched:</Typography>
+        <Container>
           {userProfileEpisodes.map((episodeItem) => (
             <ul>
-              <li key={episodeItem.id}>{episodeItem?.episode?.season?.franchise?.label} Season {episodeItem?.episode?.season?.season_number} Episode {episodeItem?.episode?.episode}: {episodeItem?.episode?.title} </li>
+              <Typography variant="p" key={episodeItem.id}>{episodeItem?.episode?.season?.franchise?.label} Season {episodeItem?.episode?.season?.season_number} Episode {episodeItem?.episode?.episode}: {episodeItem?.episode?.title} </Typography>
             </ul>
           ))}
-        </div>
-        <button className="btn btn-2 btn-sep icon-create"
+        </Container>
+        <Button variant="outlined" color="primary" size="small"
           onClick={() => {
             navigate({ pathname: "/myProfile/edit" })
           }}
-        >Edit Profile</button>
+        >Edit Profile</Button>
       </div>
-    </div>
+    </Container>
   );
 };
