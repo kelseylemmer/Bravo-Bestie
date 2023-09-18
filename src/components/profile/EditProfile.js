@@ -55,8 +55,8 @@ export const EditProfile = ({ token }) => {
         <Box
           component="form"
           sx={{
-            '& .MuiFormControl-root': { marginBottom: '20px' }, // Add margin-bottom to FormControl
-            '& .MuiTextField-root': { width: '100%' }, // Expand the text fields to full width
+            '& .MuiFormControl-root': { marginBottom: '20px' },
+            '& .MuiTextField-root': { width: '100%' },
           }}
           noValidate
           autoComplete="off"
