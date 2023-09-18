@@ -1,3 +1,11 @@
-.navbar-item img {
-  max-height: 3rem;
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.home-pic img {
+  height: 800px;
+  width: auto
 }

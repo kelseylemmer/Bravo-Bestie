@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
 import { createProfileEpisode, deleteProfileEpisode, getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
+import { Container, Typography } from "@mui/material";
+
 
 export const FranchiseDetails = ({ token }) => {
   const { id } = useParams();
@@ -20,7 +22,7 @@ export const FranchiseDetails = ({ token }) => {
 
   useEffect(() => {
     newUserProfileEpisodes()
-  }, [userProfileEpisodes]);
+  }, []);
 
   useEffect(() => {
     newProfileEpisodes()
@@ -39,26 +41,6 @@ export const FranchiseDetails = ({ token }) => {
   const newUserProfileEpisodes = () => {
     getCurrentUserEpisodes().then((data) => setUserProfileEpisodes(data));
   }
-
-  // const addOrRemoveEpisode = (e) => {
-  //   const checkedEpisodeId = parseInt(e.target.value)
-  //   console.log("checkedEpisodeId", checkedEpisodeId)
-  //   if (episodeKeys.includes(checkedEpisodeId)) {
-  //     const updatedEpisodes = episodeKeys.filter(episodeId => episodeId !== checkedEpisodeId)
-  //     setEpisodeKeys(updatedEpisodes)
-  //     deleteProfileEpisode(checkedEpisodeId)
-  //     newUserProfileEpisodes()
-  //   } else {
-  //     const copy = [...episodeKeys]
-  //     const newProfileEpisode = {
-  //       episode: checkedEpisodeId,
-  //     };
-  //     copy.push(checkedEpisodeId)
-  //     setEpisodeKeys(copy)
-  //     createProfileEpisode(newProfileEpisode)
-  //     newUserProfileEpisodes()
-  //   }
-  // }
 
   const addOrRemoveEpisode = (e) => {
     const checkedEpisodeId = parseInt(e.target.value);
@@ -87,33 +69,6 @@ export const FranchiseDetails = ({ token }) => {
 
 
 
-
-
-  //   const checkedEpisodeId = parseInt(e.target.value);
-  //   let foundMatch = false;
-
-  //   for (const userProfileEpisode of userProfileEpisodes) {
-  //     if (userProfileEpisode.episode === checkedEpisodeId) {
-  //       deleteProfileEpisode(userProfileEpisode.id);
-  //       newUserProfileEpisodes()
-  //       newProfileEpisodes()
-  //       foundMatch = true;
-  //       break;
-  //     }
-  //   }
-  //   if (foundMatch = false) {
-  //     console.log(checkedEpisodeId)
-  //     const newProfileEpisode = {
-  //       episode: checkedEpisodeId,
-  //     };
-  //     createProfileEpisode(newProfileEpisode);
-  //     episodeKeys.push(checkedEpisodeId);
-
-  //   }
-
-  // }
-
-
   // Create a separate function to map over episodes
   const renderEpisodes = (season) => {
     const episodeList = [];
@@ -137,24 +92,24 @@ export const FranchiseDetails = ({ token }) => {
     return episodeList;
   };
 
+
+
   return (
     <div className="franchise-details">
-      <div className="header">
-        <h2>{franchiseDetails.label}</h2>
+      <div style={{ width: "100%", overflowX: "scroll" }}>
+        <img src={franchiseDetails?.banner_image} alt="franchise picture" style={{ width: "100%" }} />
       </div>
-      <div className="top-container">
-        <div className="top-left-franchise">
-          <img src={franchiseDetails?.image} alt="franchise picture" className="franchise-pic" />
-        </div>
-        <div className="top-right-franchise">
+      <div style={{ height: "600px", overflowY: "auto", border: "2px solid #ccc", borderRadius: "10px", padding: "16px", scrollbarWidth: "thin", scrollbarColor: "#888 #555" }}>
+        <Container maxWidth="lg">
           {seasons.map((season) => (
             <div key={season.id}>
-              <h2>Season {season.season_number}</h2>
-              <ul>{renderEpisodes(season)}</ul>
+              <Typography variant="h4">Season {season.season_number}</Typography>
+              {renderEpisodes(season)}
             </div>
           ))}
-        </div>
+        </Container>
       </div>
     </div>
   );
+
 };
