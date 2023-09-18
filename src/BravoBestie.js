@@ -12,7 +12,7 @@ export const BravoBestie = () => {
   }
 
   return <>
-    <NavBar token={token} setToken={setToken} />
+    {/* <NavBar token={token} setToken={setToken} /> */}
     <ApplicationViews token={token} setToken={setToken} />
   </>
 }
