@@ -111,5 +111,4 @@ export const FranchiseDetails = ({ token }) => {
       </div>
     </div>
   );
-
 };
