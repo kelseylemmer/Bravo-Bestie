@@ -10,7 +10,7 @@ export const EditProfile = ({ token }) => {
   const navigate = useNavigate()
   const [currentProfile, setCurrentProfile] = useState({});
   const [franchises, setFranchises] = useState([])
-  const [selectedFranchise, setSelectedFranchise] = useState()
+  const [selectedFranchise, setSelectedFranchise] = useState(``)
 
   const id = currentProfile.id
 
@@ -34,13 +34,14 @@ export const EditProfile = ({ token }) => {
   }, []);
 
   const changeProfileState = (event) => {
-    const { name, value } = event.target;
+    const { id, value } = event.target;
     setCurrentProfile((prevState) => ({
       ...prevState,
-      [name]: value,
+      [id]: value,
     }));
   };
 
+  console.log(selectedFranchise)
 
   return (
     <Grid
@@ -55,8 +56,8 @@ export const EditProfile = ({ token }) => {
         <Box
           component="form"
           sx={{
-            '& .MuiFormControl-root': { marginBottom: '20px' }, // Add margin-bottom to FormControl
-            '& .MuiTextField-root': { width: '100%' }, // Expand the text fields to full width
+            '& .MuiFormControl-root': { marginBottom: '20px' },
+            '& .MuiTextField-root': { width: '100%' },
           }}
           noValidate
           autoComplete="off"
@@ -108,14 +109,14 @@ export const EditProfile = ({ token }) => {
           </FormControl>
 
           <FormControl fullWidth>
-            <InputLabel htmlFor="favorite_franchise" shrink={Boolean(currentProfile?.favorite_franchise?.id)}>
+            <InputLabel htmlFor="favorite_franchise" shrink={Boolean(selectedFranchise)}>
               Favorite Show
             </InputLabel>
             <Select
               required
               autoFocus
               id="favorite_franchise"
-              value={currentProfile?.favorite_franchise?.id}
+              value={selectedFranchise}
               onChange={(evt) => {
                 setSelectedFranchise(parseInt(evt.target.value));
               }}

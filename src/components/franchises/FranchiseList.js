@@ -1,26 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAllFranchises } from "../../managers/FranchiseManager";
 import "./franchise.css";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { ImageListItemBar, Box, Typography } from "@mui/material";
+import { ImageListItemBar, Box, Typography, TextField } from "@mui/material";
 
 export const FranchiseList = () => {
   const [franchiseList, setFranchiseList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     getAllFranchises().then((data) => setFranchiseList(data));
   }, []);
 
+  const filteredFranchises = franchiseList.filter((franchise) =>
+    franchise.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
 
     <>
       <Typography variant='h2'>All Shows</Typography>
+      <TextField
+        label="Search Franchise"
+        variant="outlined"
+        fullWidth
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        sx={{ marginBottom: 2, width: '50 %' }}
+      />
+
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <ImageList sx={{ width: '95%', height: 440 }} cols={franchiseList.length}>
-          {franchiseList.map((franchise) => (
+          {filteredFranchises.map((franchise) => (
             <ImageListItem key={franchise.id} sx={{ width: 266, height: 418 }}>
               <a key={franchise.id} href={`/franchises/${franchise.id}`}>
                 <img

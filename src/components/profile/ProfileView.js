@@ -8,10 +8,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { CenterFocusStrong } from "@mui/icons-material";
 
 export const ProfileDetails = ({ token }) => {
-  const { id } = useParams();
   const [profile, setProfile] = useState({});
-  const [franchiseDetails, setFranchiseDetails] = useState({});
-  const [seasons, setSeasons] = useState([]);
   const [userProfileEpisodes, setUserProfileEpisodes] = useState([])
   const [profileEpisodeList, setProfileEpisodeList] = useState([])
 
