@@ -2,38 +2,36 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAllFranchises } from "../../managers/FranchiseManager";
 import "./franchise.css";
-
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import { ImageListItemBar } from "@mui/material";
 
 export const FranchiseList = () => {
-  const { id } = useParams();
   const [franchiseList, setFranchiseList] = useState([]);
 
   useEffect(() => {
     getAllFranchises().then((data) => setFranchiseList(data));
   }, []);
 
-  // Define the number of franchises per row
-  const franchisesPerRow = 4; // You can adjust this number as needed
 
   return (
-    <div className="franchise-details">
-      <div className="header">
-        <h2>All Shows</h2>
-        <div className="franchise-list">
-          {franchiseList.map((franchise, index) => (
-            <section className="franchise-item" key={franchise.id}>
-              <Link to={`/franchises/${franchise.id}`}>
-                <div className="franchise-item-container">
-                  <div className="franchise-pics-container">
-                    <img src={franchise?.list_image} alt="franchise-photo" className="franchise-pics" />
-                  </div>
-                  <div className="franchise-label">{franchise.label}</div>
-                </div>
-              </Link>
-            </section>
-          ))}
-        </div>
-      </div>
-    </div>
+    <ImageList sx={{ width: '100%', height: 450 }} cols={franchiseList.length}>
+      {franchiseList.map((franchise) => (
+        <ImageListItem key={franchise.id} sx={{ width: 266, height: 418 }}>
+          <img
+            className="franchise-list-image"
+            src={`${franchise.list_image}?w=248&fit=crop&auto=format`}
+            srcSet={`${franchise.list_image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            alt={franchise.abbreviation}
+            loading="lazy"
+          />
+          <ImageListItemBar
+            title={franchise.label}
+            subtitle={franchise.abbreviation}
+            position="below"
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
   );
-};
+}
