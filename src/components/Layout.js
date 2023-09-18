@@ -53,22 +53,18 @@ export const Layout = ({ children }) => {
   return (
     <div>
       {isLoggedIn && (
-        <AppBar position="static" color="primary">
+        <AppBar position="static" color="primary" sx={{ backgroundColor: "white" }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Toolbar>
-              <IconButton
+              <Avatar
                 component={Link}
                 to="/"
-                color="inherit"
                 edge="start"
-                aria-label="home"
-              >
-                <HomeIcon />
-              </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Bravo Bestie
-              </Typography>
+                alt="home"
+                sx={{ borderRadius: 0, height: 50, width: 65 }}
+                src="https://i.imgur.com/ARG9Bfat.png"
+              />
               <Box flexGrow={1} />
               <IconButton
                 color="inherit"

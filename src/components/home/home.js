@@ -1,9 +1,11 @@
+import { Box } from "@mui/material";
 import "./home.css";
 
+
 export const Home = () => {
-  return <>
-    <div className=" home-container">
-      <img src="https://i.imgur.com/VrWi6E8.png" alt="Bravo Bestie" className="home-pic" />
-    </div>
-  </>
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', alignContent: 'center' }}>
+      <img src="https://i.imgur.com/cnD6p2ot.png" alt="Bravo Bestie" className="home-pic" />
+    </Box>
+  )
 }

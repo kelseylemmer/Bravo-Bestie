@@ -27,7 +27,7 @@ export const FranchiseList = () => {
         fullWidth
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        sx={{ marginBottom: 2, width: '50 %' }}
+        sx={{ marginBottom: 2, width: '50%' }}
       />
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
