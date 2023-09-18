@@ -41,8 +41,6 @@ export const EditProfile = ({ token }) => {
     }));
   };
 
-  console.log(selectedFranchise)
-
   return (
     <Grid
       container
