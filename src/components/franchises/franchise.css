@@ -41,3 +41,8 @@
   width: 600px;
   overflow-y: scroll;
 }
+
+.franchise-list-image {
+  height: 300px;
+  width: auto
+}
