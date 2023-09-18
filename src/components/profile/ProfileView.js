@@ -4,7 +4,8 @@ import { getFranchiseById, getSeasonByFranchise } from "../../managers/Franchise
 import { createProfileEpisode, deleteProfileEpisode, getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { getCurrentUserProfile } from "../../managers/ProfileManager";
 import "./profile.css";
-import { Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
+import { CenterFocusStrong } from "@mui/icons-material";
 
 export const ProfileDetails = ({ token }) => {
   const { id } = useParams();
@@ -45,74 +46,46 @@ export const ProfileDetails = ({ token }) => {
   }
 
 
-  const addOrRemoveEpisode = (e) => {
-    const checkedEpisodeId = parseInt(e.target.value);
-    let foundMatch = false;
-
-    for (const userProfileEpisode of userProfileEpisodes) {
-      if (userProfileEpisode.episode === checkedEpisodeId) {
-        deleteProfileEpisode(userProfileEpisode.id);
-        newUserProfileEpisodes();
-        newProfileEpisodes()
-        foundMatch = true;
-        break;
-      }
-    }
-    if (!foundMatch) {
-      const newProfileEpisode = {
-        episode: checkedEpisodeId,
-      };
-      createProfileEpisode(newProfileEpisode);
-      profileEpisodeList.push(checkedEpisodeId);
-      newUserProfileEpisodes();
-      newProfileEpisodes()
-    }
-  };
-
-
-  // // Create a separate function to map over episodes
-  // const renderEpisodes = (season) => {
-  //   const episodeList = [];
-  //   for (const episode of season.episodes) {
-  //     episodeList.push(
-  //       <div key={episode.id}>
-  //         <label>
-  //           <input
-  //             type="checkbox"
-  //             value={episode.id}
-  //             checked={profileEpisodeList.includes(episode.id)}
-  //             onChange={(e) => addOrRemoveEpisode(e)}
-  //           />
-  //           <h3>Episode {episode.episode}: {episode.title}</h3>
-  //           <p>{episode.synopsis}</p>
-  //           <p>Air Date: {episode.air_date}</p>
-  //         </label>
-  //       </div>
-  //     );
-  //   }
-  //   return episodeList;
-  // };
-
   return (
     <Container>
-      <div className="header">
-        <Typography variant="h2" color="primary">{profile.display_name}</Typography>
-        <img src={profile.picture} alt="profile picture" className="profile-pictures" />
-        <Typography variant="h5">Favorite Franchise: {profile?.favorite_franchise?.label}</Typography>
-        <Typography variant="h5">Episodes Watched:</Typography>
-        <Container>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+            borderRadius: '10px',
+            height: '500px',
+            width: '500px'
+          }}>
+            <Typography variant="h2">{profile.display_name}</Typography>
+            <img src={profile.picture} alt="profile picture" className="profile-pictures" /> <br></br>
+            {profile.bio}
+          </Box>
+          <Box sx={{
+            alignItems: 'center',
+            height: '500px',
+            width: '500px'
+          }}>
+            <Typography variant="h5">Favorite Franchise:</Typography>
+            <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics" /><br></br>
+            <Button variant="outlined" color="primary" size="small"
+              onClick={() => {
+                navigate({ pathname: "/myProfile/edit" })
+              }}
+            >Edit Profile</Button>
+          </Box>
+        </Box>
+        <Box>
+          <Typography variant="h5">Episodes Watched:</Typography>
           {userProfileEpisodes.map((episodeItem) => (
             <ul>
-              <Typography variant="p" key={episodeItem.id}>{episodeItem?.episode?.season?.franchise?.label} Season {episodeItem?.episode?.season?.season_number} Episode {episodeItem?.episode?.episode}: {episodeItem?.episode?.title} </Typography>
+              <Typography variant="p" key={episodeItem.id}>{episodeItem?.episode?.season?.franchise?.label} S{episodeItem?.episode?.season?.season_number}E{episodeItem?.episode?.episode}</Typography>
             </ul>
           ))}
-        </Container>
-        <Button variant="outlined" color="primary" size="small"
-          onClick={() => {
-            navigate({ pathname: "/myProfile/edit" })
-          }}
-        >Edit Profile</Button>
-      </div>
-    </Container>
+        </Box>
+      </Box>
+    </Container >
   );
 };
