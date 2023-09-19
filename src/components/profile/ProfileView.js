@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { getCurrentUserProfile } from "../../managers/ProfileManager";
 import "./profile.css";
-import { Box, Button, Container, Typography, Card, CardContent, List, ListItem, } from "@mui/material";
+import { Box, Button, Container, Typography, Card, CardContent, List, ListItem, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 
 export const ProfileDetails = ({ token }) => {
@@ -66,46 +67,59 @@ export const ProfileDetails = ({ token }) => {
 
   const EpisodeList = ({ episodes }) => {
     return (
+      <List sx={{ fontFamily: 'DM Sans, sans-serif', fontWeight: '800' }}>
+        {episodes.map((episode) => (
+          <ListItem key={episode.id}>
+            E{episode.episode}: {episode.title}
+          </ListItem>
+        ))}
+      </List>
+    );
+  };
+
+  const SeasonAccordion = ({ seasons }) => {
+    return (
       <>
-
-        <List sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>
-          {episodes.map((episode) => (
-            <ListItem key={episode.id}>
-              E{episode.episode}: {episode.title}
-            </ListItem>
-          ))}
-        </List>
-
+        {seasons.map((season) => (
+          <Accordion key={season.id}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontWeight: '800',
+                  marginTop: '5px'
+                }}
+              >
+                Season {season.season_number}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <EpisodeList episodes={season.episodes} />
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </>
     );
   };
 
   const FranchiseBox = ({ franchise }) => {
     return (
-
       <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
         <CardContent>
           <Typography variant="h4" sx={{
-            fontFamily: 'DM Sans, sans- serif',
+            fontFamily: 'DM Sans, sans-serif',
             fontWeight: '800',
             textTransform: 'uppercase'
           }}>
-            {franchise.label}</Typography>
-          {franchise.seasons.map((season) => (
-            <div key={season.id}>
-              <Typography variant="h5" sx={{
-                fontFamily: 'DM Sans, sans- serif',
-                fontWeight: '800',
-                marginTop: '5px'
-              }}>
-                Season {season.season_number}</Typography>
-              <EpisodeList episodes={season.episodes} />
-            </div>
-          ))}
+            {franchise.label}
+          </Typography>
+          <SeasonAccordion seasons={franchise.seasons} />
         </CardContent>
       </Card>
     );
   };
+
 
 
   return (
