@@ -64,6 +64,23 @@ export const Layout = ({ children }) => {
                 sx={{ borderRadius: 0, height: 50, width: 65 }}
                 src="https://i.imgur.com/ARG9Bfat.png"
               />
+              <Typography
+                variant="h5"
+                component={Link}
+                to="/franchises"
+                sx={{
+                  flexGrow: 1,
+                  color: 'black',
+                  marginLeft: '40px',
+                  textDecoration: 'none',
+                  transition: 'color 0.3s ease',
+                  '&:hover': {
+                    color: 'darkgrey',
+                  }
+                }}
+              >
+                Shows
+              </Typography>
               <Box flexGrow={1} />
               <IconButton
                 color="inherit"
@@ -96,8 +113,9 @@ export const Layout = ({ children }) => {
             </Toolbar>
           </ThemeProvider>
         </AppBar>
-      )}
+      )
+      }
       <div>{children}</div>
-    </div>
+    </div >
   );
 };
