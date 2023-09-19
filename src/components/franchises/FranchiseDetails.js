@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
 import { createProfileEpisode, deleteProfileEpisode, getUserEpisodes } from "../../managers/ProfileEpisodeManager";
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 
 export const FranchiseDetails = ({ token }) => {
@@ -71,41 +72,71 @@ export const FranchiseDetails = ({ token }) => {
 
   // Create a separate function to map over episodes
   const renderEpisodes = (season) => {
-    const episodeList = [];
-    for (const episode of season.episodes) {
-      episodeList.push(
-        <div key={episode.id}>
-          <label>
-            <input
-              type="checkbox"
-              value={episode.id}
-              checked={episodeKeys.includes(episode.id)}
-              onChange={(e) => addOrRemoveEpisode(e)}
-            />
-            <h3>Episode {episode.episode}: {episode.title}</h3>
-            <p>{episode.synopsis}</p>
-            <p>Air Date: {episode.air_date}</p>
-          </label>
-        </div>
-      );
-    }
-    return episodeList;
+    return season.episodes.map((episode) => (
+      <div key={episode.id}>
+        <label style={{ display: 'flex', alignItems: 'center' }}>
+          <input
+            type="checkbox"
+            value={episode.id}
+            checked={episodeKeys.includes(episode.id)}
+            onChange={(e) => addOrRemoveEpisode(e)}
+          />
+          <Typography variant='h5' sx={{ fontFamily: 'DM Sans, sans-serif', marginLeft: '8px', fontWeight: 'bold' }}>
+            Episode {episode.episode}: {episode.title}
+          </Typography>
+        </label>
+        <Typography variant='p' sx={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 'bold' }}>
+          {episode.synopsis}
+        </Typography> <br></br>
+        <Typography variant='p' sx={{ fontFamily: 'DM Sans, sans-serif', marginTop: '10px' }}>
+          Air Date: {episode.air_date}
+        </Typography>
+      </div>
+    ));
   };
+
 
 
 
   return (
     <div className="franchise-details">
       <div style={{ width: "100%", overflowX: "scroll" }}>
-        <img src={franchiseDetails?.banner_image} alt="franchise picture" style={{ width: "100%" }} />
+        <img
+          src={franchiseDetails?.banner_image}
+          alt="franchise picture"
+          style={{ width: "100%" }}
+        />
       </div>
-      <div style={{ height: "600px", overflowY: "auto", border: "2px solid #ccc", borderRadius: "10px", padding: "16px", scrollbarWidth: "thin", scrollbarColor: "#888 #555" }}>
+      <div
+        style={{
+          height: "600px",
+          overflowY: "auto",
+          border: "2px solid #ccc",
+          borderRadius: "10px",
+          padding: "16px",
+          scrollbarWidth: "thin",
+          scrollbarColor: "#888 #555",
+        }}
+      >
         <Container maxWidth="lg">
           {seasons.map((season) => (
-            <div key={season.id}>
-              <Typography variant="h4">Season {season.season_number}</Typography>
-              {renderEpisodes(season)}
-            </div>
+            <Accordion key={season.id}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontFamily: "DM Sans, sans- serif",
+                    fontWeight: "bold",
+                    textTransform: 'uppercase'
+                  }}
+                >
+                  Season {season.season_number}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {renderEpisodes(season)}
+              </AccordionDetails>
+            </Accordion>
           ))}
         </Container>
       </div>
