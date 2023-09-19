@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
-import { createProfileEpisode, deleteProfileEpisode, getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
+import { getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { getCurrentUserProfile } from "../../managers/ProfileManager";
 import "./profile.css";
-import { Box, Button, Container, Typography } from "@mui/material";
-import { CenterFocusStrong } from "@mui/icons-material";
+import { Box, Button, Container, Typography, Card, CardContent, List, ListItem } from "@mui/material";
+
+
 
 export const ProfileDetails = ({ token }) => {
   const [profile, setProfile] = useState({});
   const [userProfileEpisodes, setUserProfileEpisodes] = useState([])
-  const [profileEpisodeList, setProfileEpisodeList] = useState([])
-
   const navigate = useNavigate()
+
+
+  useEffect(() => {
+    getCurrentUserProfile(token).then((data) => setProfile(data));
+  }, [token]);
+
 
   const constructFranchiseHierarchy = (data) => {
     const franchises = [];
@@ -49,35 +53,46 @@ export const ProfileDetails = ({ token }) => {
         currSeason?.episodes.push(d.episode);
       }
     });
-
     return franchises;
   };
 
   useEffect(() => {
-    getCurrentUserProfile(token).then((data) => setProfile(data));
-  }, [token]);
-
-
-  useEffect(() => {
-    newUserProfileEpisodes()
-  }, []);
-
-  useEffect(() => {
-    newProfileEpisodes()
-  }, []);
-
-  const newProfileEpisodes = () => {
-    getCurrentUserEpisodes().then((data) => {
-      const episodes = [];
-      data.map((profileEpisode) => {
-        episodes.push(profileEpisode.episode);
+    getCurrentUserEpisodes()
+      .then((data) => {
+        const processedData = constructFranchiseHierarchy(data);
+        setUserProfileEpisodes(processedData);
       });
-      setProfileEpisodeList(episodes);
-    });
-  }
-  const newUserProfileEpisodes = () => {
-    getCurrentUserEpisodes().then((data) => setUserProfileEpisodes(data));
-  }
+  }, []);
+
+
+  const EpisodeList = ({ episodes }) => {
+    return (
+      <List>
+        {episodes.map((episode) => (
+          <ListItem key={episode.id}>
+            E{episode.episode}: {episode.title}
+          </ListItem>
+        ))}
+      </List>
+    );
+  };
+
+  const FranchiseBox = ({ franchise }) => {
+    return (
+
+      <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
+        <CardContent>
+          <Typography variant="h4">{franchise.label}</Typography>
+          {franchise.seasons.map((season) => (
+            <div key={season.id}>
+              <Typography variant="h6">Season {season.season_number}</Typography>
+              <EpisodeList episodes={season.episodes} />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    );
+  };
 
 
   return (
@@ -104,22 +119,22 @@ export const ProfileDetails = ({ token }) => {
           }}>
             <Typography variant="h5">Favorite Franchise:</Typography>
             <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics" /><br></br>
-            <Button variant="outlined" color="primary" size="small"
-              onClick={() => {
-                navigate({ pathname: "/myProfile/edit" })
-              }}
-            >Edit Profile</Button>
           </Box>
         </Box>
-        <Box>
-          <Typography variant="h5">Episodes Watched:</Typography>
-          {userProfileEpisodes.map((episodeItem) => (
-            <ul>
-              <Typography variant="p" key={episodeItem.id}>{episodeItem?.episode?.season?.franchise?.label} S{episodeItem?.episode?.season?.season_number}E{episodeItem?.episode?.episode}</Typography>
-            </ul>
+        <Typography variant="h5">Episodes Watched:</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+          {userProfileEpisodes.map((franchise) => (
+            <Box key={franchise.id} sx={{ width: '30%', marginBottom: '20px', marginTop: '20px' }}>
+              <FranchiseBox franchise={franchise} />
+            </Box>
           ))}
         </Box>
+        <Button variant="outlined" color="primary" size="small"
+          onClick={() => {
+            navigate({ pathname: "/myProfile/edit" })
+          }}
+        >Edit Profile</Button>
       </Box>
-    </Container >
+    </Container>
   );
-};
+}
