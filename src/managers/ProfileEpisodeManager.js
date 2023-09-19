@@ -1,5 +1,17 @@
+
+// For fetching profile episodes for profile display
 export const getCurrentUserEpisodes = () => {
   return fetch(`http://localhost:8000/profileEpisodes?current`, {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
+    .then(response => response.json())
+}
+
+// For fetching profile episodes for franchise display
+export const getUserEpisodes = () => {
+  return fetch(`http://localhost:8000/profileEpisode?current`, {
     headers: {
       "Authorization": `Token ${localStorage.getItem("auth_token")}`
     }
