@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { getCurrentUserProfile } from "../../managers/ProfileManager";
 import "./profile.css";
-import { Box, Button, Container, Typography, Card, CardContent, List, ListItem } from "@mui/material";
-
+import { Box, Button, Container, Typography, Card, CardContent, List, ListItem, } from "@mui/material";
 
 
 export const ProfileDetails = ({ token }) => {
@@ -67,13 +66,17 @@ export const ProfileDetails = ({ token }) => {
 
   const EpisodeList = ({ episodes }) => {
     return (
-      <List>
-        {episodes.map((episode) => (
-          <ListItem key={episode.id}>
-            E{episode.episode}: {episode.title}
-          </ListItem>
-        ))}
-      </List>
+      <>
+
+        <List sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>
+          {episodes.map((episode) => (
+            <ListItem key={episode.id}>
+              E{episode.episode}: {episode.title}
+            </ListItem>
+          ))}
+        </List>
+
+      </>
     );
   };
 
@@ -82,10 +85,20 @@ export const ProfileDetails = ({ token }) => {
 
       <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
         <CardContent>
-          <Typography variant="h4">{franchise.label}</Typography>
+          <Typography variant="h4" sx={{
+            fontFamily: 'DM Sans, sans- serif',
+            fontWeight: '800',
+            textTransform: 'uppercase'
+          }}>
+            {franchise.label}</Typography>
           {franchise.seasons.map((season) => (
             <div key={season.id}>
-              <Typography variant="h6">Season {season.season_number}</Typography>
+              <Typography variant="h5" sx={{
+                fontFamily: 'DM Sans, sans- serif',
+                fontWeight: '800',
+                marginTop: '5px'
+              }}>
+                Season {season.season_number}</Typography>
               <EpisodeList episodes={season.episodes} />
             </div>
           ))}
@@ -108,23 +121,28 @@ export const ProfileDetails = ({ token }) => {
             height: '500px',
             width: '500px'
           }}>
-            <Typography variant="h2">{profile.display_name}</Typography>
+            <Typography variant="h2" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>{profile.display_name}</Typography>
             <img src={profile.picture} alt="profile picture" className="profile-pictures" /> <br></br>
-            {profile.bio}
+            <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans- serif' }}>{profile.bio}</Typography>
           </Box>
           <Box sx={{
             alignItems: 'center',
             height: '500px',
             width: '500px'
           }}>
-            <Typography variant="h5">Favorite Franchise:</Typography>
+            <Typography variant="h5" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>Favorite Franchise:</Typography>
             <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics" /><br></br>
           </Box>
         </Box>
-        <Typography variant="h5">Episodes Watched:</Typography>
+        <Typography variant="h3" sx={{
+          fontFamily: 'DM Sans, sans- serif',
+          fontWeight: 'bold',
+          fontStyle: 'italic',
+          textTransform: 'uppercase'
+        }}>Episodes Watched:</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           {userProfileEpisodes.map((franchise) => (
-            <Box key={franchise.id} sx={{ width: '30%', marginBottom: '20px', marginTop: '20px' }}>
+            <Box key={franchise.id} sx={{ width: '350px', marginBottom: '20px', marginTop: '20px' }}>
               <FranchiseBox franchise={franchise} />
             </Box>
           ))}
@@ -135,6 +153,6 @@ export const ProfileDetails = ({ token }) => {
           }}
         >Edit Profile</Button>
       </Box>
-    </Container>
+    </Container >
   );
 }

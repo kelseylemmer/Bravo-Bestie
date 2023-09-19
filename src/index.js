@@ -2,23 +2,31 @@ import { createRoot } from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
 import "./index.css"
 import { BravoBestie } from "./BravoBestie"
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
 import { Layout } from "./components/Layout";
-import { ThemeProvider } from "styled-components";
 import { createTheme } from "@mui/material";
+import { ThemeProvider } from "styled-components";
+
 
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#EC6938"
+      main: "#EC6938",
     },
     secondary: {
       main: "#FFFFE2",
+    },
+  },
+  typography: {
+    fontFamily: "DM Sans, sans- serif",
+    h1: {
+      fontSize: "2rem",
+      fontWeight: 500,
+    },
+    h2: {
+      fontSize: "1.8rem",
+      fontWeight: 500,
     },
   },
 });

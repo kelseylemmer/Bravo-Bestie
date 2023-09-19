@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Home as HomeIcon } from "@mui/icons-material";
 import {
   AppBar,
   Toolbar,
@@ -38,7 +37,7 @@ export const Layout = ({ children }) => {
       },
     },
     typography: {
-      fontFamily: "Roboto, Arial, sans-serif",
+      fontFamily: "DM Sans, sans- serif",
       h1: {
         fontSize: "2rem",
         fontWeight: 500,
