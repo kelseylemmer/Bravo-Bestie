@@ -1,7 +1,7 @@
 
 // For fetching profile episodes for profile display
 export const getCurrentUserEpisodes = () => {
-  return fetch(`http://localhost:8000/profileEpisodes?current`, {
+  return fetch(`http://localhost:8000/profileepisodes?current`, {
     headers: {
       "Authorization": `Token ${localStorage.getItem("auth_token")}`
     }
@@ -11,7 +11,7 @@ export const getCurrentUserEpisodes = () => {
 
 // For fetching profile episodes for franchise display
 export const getUserEpisodes = () => {
-  return fetch(`http://localhost:8000/profileEpisode?current`, {
+  return fetch(`http://localhost:8000/profileepisode?current`, {
     headers: {
       "Authorization": `Token ${localStorage.getItem("auth_token")}`
     }
@@ -21,7 +21,7 @@ export const getUserEpisodes = () => {
 
 export const deleteProfileEpisode = (checkedEpisodeId) => {
 
-  return fetch(`http://localhost:8000/profileEpisodes/${checkedEpisodeId}`, {
+  return fetch(`http://localhost:8000/profileepisodes/${checkedEpisodeId}`, {
     method: "DELETE",
     headers: {
       "Authorization": `Token ${localStorage.getItem("auth_token")}`
@@ -31,7 +31,7 @@ export const deleteProfileEpisode = (checkedEpisodeId) => {
 
 export const createProfileEpisode = (newProfileEpisode) => {
 
-  return fetch("http://localhost:8000/profileEpisodes", {
+  return fetch("http://localhost:8000/profileepisodes", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
