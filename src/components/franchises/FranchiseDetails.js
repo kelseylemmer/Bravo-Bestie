@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
-import { createProfileEpisode, deleteProfileEpisode, getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
+import { createProfileEpisode, deleteProfileEpisode, getUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { Container, Typography } from "@mui/material";
 
 
@@ -29,7 +29,7 @@ export const FranchiseDetails = ({ token }) => {
   }, []);
 
   const newProfileEpisodes = () => {
-    getCurrentUserEpisodes().then((data) => {
+    getUserEpisodes().then((data) => {
       const episodes = [];
       data.map((profileEpisode) => {
         episodes.push(profileEpisode.episode.id);
@@ -39,7 +39,7 @@ export const FranchiseDetails = ({ token }) => {
   }
 
   const newUserProfileEpisodes = () => {
-    getCurrentUserEpisodes().then((data) => setUserProfileEpisodes(data));
+    getUserEpisodes().then((data) => setUserProfileEpisodes(data));
   }
 
   const addOrRemoveEpisode = (e) => {
