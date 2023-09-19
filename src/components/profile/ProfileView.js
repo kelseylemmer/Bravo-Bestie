@@ -104,6 +104,9 @@ export const ProfileDetails = ({ token }) => {
   };
 
   const FranchiseBox = ({ franchise }) => {
+
+    const episodeCount = franchise.seasons.length
+
     return (
       <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
         <CardContent>
@@ -115,6 +118,14 @@ export const ProfileDetails = ({ token }) => {
             {franchise.label}
           </Typography>
           <SeasonAccordion seasons={franchise.seasons} />
+          <Typography variant="h6" sx={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontWeight: '800',
+            color: 'blue',
+            marginLeft: '20 px'
+          }}>
+            <span sx={{ fontWeight: 'bold' }}>episodes watched:</span> {episodeCount}
+          </Typography>
         </CardContent>
       </Card>
     );
