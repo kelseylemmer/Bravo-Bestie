@@ -125,7 +125,7 @@ export const ProfileDetails = ({ token }) => {
   return (
     <Container>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: '50px', marginBottom: '30px' }}>
           <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -152,7 +152,7 @@ export const ProfileDetails = ({ token }) => {
           fontFamily: 'DM Sans, sans- serif',
           fontWeight: 'bold',
           fontStyle: 'italic',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
         }}>Episodes Watched:</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           {userProfileEpisodes.map((franchise) => (
