@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
 import { createProfileEpisode, deleteProfileEpisode, getUserEpisodes } from "../../managers/ProfileEpisodeManager";
+import { getFranchiseCast } from "../../managers/SeasonCastManager";
 import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -12,6 +13,21 @@ export const FranchiseDetails = ({ token }) => {
   const [seasons, setSeasons] = useState([]);
   const [userProfileEpisodes, setUserProfileEpisodes] = useState([])
   const [episodeKeys, setEpisodeKeys] = useState([])
+  const [franchiseCast, setFranchiseCast] = useState([])
+
+  const newUserProfileEpisodes = () => {
+    getUserEpisodes().then((data) => setUserProfileEpisodes(data));
+  }
+
+  const newProfileEpisodes = () => {
+    getUserEpisodes().then((data) => {
+      const episodes = [];
+      data.map((profileEpisode) => {
+        episodes.push(profileEpisode.episode.id);
+      });
+      setEpisodeKeys(episodes);
+    });
+  }
 
   useEffect(() => {
     getFranchiseById(id).then((data) => setFranchiseDetails(data));
@@ -29,19 +45,25 @@ export const FranchiseDetails = ({ token }) => {
     newProfileEpisodes()
   }, []);
 
-  const newProfileEpisodes = () => {
-    getUserEpisodes().then((data) => {
-      const episodes = [];
-      data.map((profileEpisode) => {
-        episodes.push(profileEpisode.episode.id);
-      });
-      setEpisodeKeys(episodes);
-    });
-  }
+  useEffect(() => {
 
-  const newUserProfileEpisodes = () => {
-    getUserEpisodes().then((data) => setUserProfileEpisodes(data));
-  }
+    getFranchiseCast(id).then(data => {
+      function getUniqueCastObjects(data) {
+        const uniqueCastSet = new Set();
+        data.forEach(item => {
+          uniqueCastSet.add(JSON.stringify(item.cast));
+        });
+
+        const uniqueCastArray = Array.from(uniqueCastSet).map(JSON.parse);
+        return uniqueCastArray;
+      }
+
+      const uniqueCast = getUniqueCastObjects(data);
+      setFranchiseCast(uniqueCast);
+    })
+  }, [id]);
+
+
 
   const addOrRemoveEpisode = (e) => {
     const checkedEpisodeId = parseInt(e.target.value);
@@ -68,8 +90,6 @@ export const FranchiseDetails = ({ token }) => {
     }
   }
 
-
-
   // Create a separate function to map over episodes
   const renderEpisodes = (season) => {
     return season.episodes.map((episode) => (
@@ -93,8 +113,7 @@ export const FranchiseDetails = ({ token }) => {
         </Typography>
       </div>
     ));
-  };
-
+  }
 
 
 
