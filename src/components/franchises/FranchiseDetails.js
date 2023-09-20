@@ -172,7 +172,6 @@ export const FranchiseDetails = ({ token }) => {
         style={{
           height: "600px",
           overflowY: "auto",
-
           borderRadius: "10px",
           padding: "16px",
           scrollbarWidth: "thin",
