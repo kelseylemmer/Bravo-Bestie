@@ -122,25 +122,57 @@ export const FranchiseDetails = ({ token }) => {
           marginTop: '30px',
           marginBottom: '30px'
         }}>Cast</Typography><br></br>
-        {franchiseCast.map((cast) => (
-          <Box key={cast.id} sx={{ width: '200px', height: '200px', marginX: '8px', borderRadius: '50%', overflow: 'hidden' }}>
-            <a key={cast.id} href={`/cast/${cast.cast.id}`}>
-              <img
-                src={`${cast.cast.img_url}?w=100&h=100&fit=crop&auto=format`}
-                srcSet={`${cast.cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
-                alt={cast.name}
-                loading="lazy"
-                style={{ borderRadius: '50%', objectFit: 'cover', width: '100%', height: '100%' }}
-              />
-            </a>
-          </Box>
-        ))}
+        <Box
+          sx={{
+            display: 'flex',
+            overflowX: 'auto',
+            flexDirection: 'row',
+            height: '220px',
+            marginBottom: '20px'
+          }}
+        >
+          {franchiseCast.map((cast) => (
+            <Box
+              key={cast.id}
+              sx={{
+                width: '200px',
+                height: '200px',
+                marginX: '8px',
+                borderRadius: '50%',
+                flex: '0 0 auto',
+              }}
+            >
+              <a key={cast.id} href={`/cast/${cast.cast.id}`}>
+                <img
+                  src={`${cast.cast.img_url}?w=100&h=100&fit=crop&auto=format`}
+                  srcSet={`${cast.cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
+                  alt={cast.name}
+                  loading="lazy"
+                  style={{
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
+              </a>
+            </Box>
+          ))}
+        </Box>
       </Box>
+      <Typography variant="h3" sx={{
+        fontFamily: 'DM Sans, sans- serif',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        textTransform: 'uppercase',
+        marginTop: '30px',
+        marginBottom: '30px'
+      }}>Episodes</Typography><br></br>
       <div
         style={{
           height: "600px",
           overflowY: "auto",
-          border: "2px solid #ccc",
+
           borderRadius: "10px",
           padding: "16px",
           scrollbarWidth: "thin",
@@ -169,6 +201,6 @@ export const FranchiseDetails = ({ token }) => {
           ))}
         </Container>
       </div>
-    </div>
+    </div >
   );
 };
