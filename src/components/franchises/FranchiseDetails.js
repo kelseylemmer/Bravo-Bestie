@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
 import { createProfileEpisode, deleteProfileEpisode, getUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { getFranchiseCast } from "../../managers/SeasonCastManager";
-import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, } from "@mui/material";
+import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, Box, ImageList, ImageListItem } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 
@@ -126,6 +126,38 @@ export const FranchiseDetails = ({ token }) => {
           style={{ width: "100%" }}
         />
       </div>
+      <Box sx={{ display: 'flex', overflowX: 'auto', flexDirection: 'column' }}>
+        <Typography variant="h3" sx={{
+          fontFamily: 'DM Sans, sans- serif',
+          fontWeight: 'bold',
+          fontStyle: 'italic',
+          textTransform: 'uppercase',
+          marginTop: '30px',
+          marginBottom: '30px'
+        }}>Cast</Typography><br></br>
+        <Box sx={{ display: 'flex' }}>
+          {franchiseCast.map((cast) => (
+            <Box key={cast.id} sx={{ width: '200px', height: '200px', marginX: '8px', borderRadius: '50%', overflow: 'hidden' }}>
+              <a key={cast.id} href={`/cast/${cast.id}`}>
+                <img
+                  src={`${cast.img_url}?w=100&h=100&fit=crop&auto=format`}
+                  srcSet={`${cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
+                  alt={cast.name}
+                  loading="lazy"
+                  style={{ borderRadius: '50%', objectFit: 'cover', width: '100%', height: '100%' }}
+                />
+              </a>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+      <Typography variant="h3" sx={{
+        fontFamily: 'DM Sans, sans- serif',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        textTransform: 'uppercase',
+        marginTop: "30px"
+      }}>Episodes</Typography><br></br>
       <div
         style={{
           height: "600px",
