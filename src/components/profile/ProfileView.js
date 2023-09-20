@@ -103,9 +103,17 @@ export const ProfileDetails = ({ token }) => {
     );
   };
 
+  const calculateEpisodeCount = (franchise) => {
+    let episodeCount = 0;
+    franchise.seasons.forEach((season) => {
+      episodeCount += season.episodes.length;
+    });
+    return episodeCount;
+  };
   const FranchiseBox = ({ franchise }) => {
 
-    const episodeCount = franchise.seasons.length
+    const episodeCount = calculateEpisodeCount(franchise);
+
 
     return (
       <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
