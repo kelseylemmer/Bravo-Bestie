@@ -120,7 +120,8 @@ export const FranchiseDetails = () => {
           fontStyle: 'italic',
           textTransform: 'uppercase',
           marginTop: '30px',
-          marginBottom: '30px'
+          marginBottom: '30px',
+          marginLeft: '30px',
         }}>Cast</Typography><br></br>
         <Box
           sx={{
@@ -128,7 +129,8 @@ export const FranchiseDetails = () => {
             overflowX: 'auto',
             flexDirection: 'row',
             height: '220px',
-            marginBottom: '20px'
+            marginBottom: '20px',
+
           }}
         >
           {franchiseCast.map((cast) => (
@@ -166,7 +168,8 @@ export const FranchiseDetails = () => {
         fontStyle: 'italic',
         textTransform: 'uppercase',
         marginTop: '30px',
-        marginBottom: '30px'
+        marginBottom: '30px',
+        marginLeft: '30px',
       }}>Episodes</Typography><br></br>
       <div
         style={{
