@@ -3,11 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "../components/auth/Login";
 import { Register } from "../components/auth/Register";
 import { Authorized } from "./Authorized";
-import { FranchiseDetails } from "../components/franchises/FranchiseDetails";
+import { FranchiseDetails } from "../components/franchise/FranchiseDetails";
 import { ProfileDetails } from "../components/profile/ProfileView";
 import { EditProfile } from "../components/profile/EditProfile";
-import { FranchiseList } from "../components/franchises/FranchiseList";
+import { FranchiseList } from "../components/franchise/FranchiseList";
 import { Home } from "../components/home/home";
+import { CastDetails } from "../components/cast/CastDetails";
 
 
 
@@ -30,6 +31,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route index element={<ProfileDetails token={token} />} />
             <Route path="edit" element={<EditProfile token={token} setToken={setToken} />} />
           </Route>
+          <Route path="/cast/:id" element={<CastDetails />} />
         </Route>
       </Routes>
     </>

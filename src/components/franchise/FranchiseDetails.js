@@ -7,7 +7,7 @@ import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, B
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 
-export const FranchiseDetails = ({ token }) => {
+export const FranchiseDetails = () => {
   const { id } = useParams();
   const [franchiseDetails, setFranchiseDetails] = useState({});
   const [seasons, setSeasons] = useState([]);
