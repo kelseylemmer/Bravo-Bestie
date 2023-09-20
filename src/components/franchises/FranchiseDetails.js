@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFranchiseById, getSeasonByFranchise } from "../../managers/FranchiseManager";
+import { getFranchiseCast } from "../../managers/FranchiseCastManager";
 import { createProfileEpisode, deleteProfileEpisode, getUserEpisodes } from "../../managers/ProfileEpisodeManager";
-import { getFranchiseCast } from "../../managers/SeasonCastManager";
-import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, Box, ImageList, ImageListItem } from "@mui/material";
+import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, Box } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 
@@ -15,9 +15,25 @@ export const FranchiseDetails = ({ token }) => {
   const [episodeKeys, setEpisodeKeys] = useState([])
   const [franchiseCast, setFranchiseCast] = useState([])
 
-  const newUserProfileEpisodes = () => {
-    getUserEpisodes().then((data) => setUserProfileEpisodes(data));
-  }
+  useEffect(() => {
+    getFranchiseById(id).then((data) => setFranchiseDetails(data));
+  }, [id]);
+
+  useEffect(() => {
+    getSeasonByFranchise(id).then((data) => setSeasons(data));
+  }, []);
+
+  useEffect(() => {
+    getFranchiseCast(id).then((data) => setFranchiseCast(data));
+  }, []);
+
+  useEffect(() => {
+    newUserProfileEpisodes()
+  }, []);
+
+  useEffect(() => {
+    newProfileEpisodes()
+  }, []);
 
   const newProfileEpisodes = () => {
     getUserEpisodes().then((data) => {
@@ -29,41 +45,9 @@ export const FranchiseDetails = ({ token }) => {
     });
   }
 
-  useEffect(() => {
-    getFranchiseById(id).then((data) => setFranchiseDetails(data));
-  }, [id]);
-
-  useEffect(() => {
-    getSeasonByFranchise(id).then((data) => setSeasons(data));
-  }, []);
-
-  useEffect(() => {
-    newUserProfileEpisodes()
-  }, []);
-
-  useEffect(() => {
-    newProfileEpisodes()
-  }, []);
-
-  useEffect(() => {
-
-    getFranchiseCast(id).then(data => {
-      function getUniqueCastObjects(data) {
-        const uniqueCastSet = new Set();
-        data.forEach(item => {
-          uniqueCastSet.add(JSON.stringify(item.cast));
-        });
-
-        const uniqueCastArray = Array.from(uniqueCastSet).map(JSON.parse);
-        return uniqueCastArray;
-      }
-
-      const uniqueCast = getUniqueCastObjects(data);
-      setFranchiseCast(uniqueCast);
-    })
-  }, [id]);
-
-
+  const newUserProfileEpisodes = () => {
+    getUserEpisodes().then((data) => setUserProfileEpisodes(data));
+  }
 
   const addOrRemoveEpisode = (e) => {
     const checkedEpisodeId = parseInt(e.target.value);
@@ -90,6 +74,8 @@ export const FranchiseDetails = ({ token }) => {
     }
   }
 
+
+
   // Create a separate function to map over episodes
   const renderEpisodes = (season) => {
     return season.episodes.map((episode) => (
@@ -113,7 +99,8 @@ export const FranchiseDetails = ({ token }) => {
         </Typography>
       </div>
     ));
-  }
+  };
+
 
 
 
@@ -135,29 +122,20 @@ export const FranchiseDetails = ({ token }) => {
           marginTop: '30px',
           marginBottom: '30px'
         }}>Cast</Typography><br></br>
-        <Box sx={{ display: 'flex' }}>
-          {franchiseCast.map((cast) => (
-            <Box key={cast.id} sx={{ width: '200px', height: '200px', marginX: '8px', borderRadius: '50%', overflow: 'hidden' }}>
-              <a key={cast.id} href={`/cast/${cast.id}`}>
-                <img
-                  src={`${cast.img_url}?w=100&h=100&fit=crop&auto=format`}
-                  srcSet={`${cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
-                  alt={cast.name}
-                  loading="lazy"
-                  style={{ borderRadius: '50%', objectFit: 'cover', width: '100%', height: '100%' }}
-                />
-              </a>
-            </Box>
-          ))}
-        </Box>
+        {franchiseCast.map((cast) => (
+          <Box key={cast.id} sx={{ width: '200px', height: '200px', marginX: '8px', borderRadius: '50%', overflow: 'hidden' }}>
+            <a key={cast.id} href={`/cast/${cast.cast.id}`}>
+              <img
+                src={`${cast.cast.img_url}?w=100&h=100&fit=crop&auto=format`}
+                srcSet={`${cast.cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
+                alt={cast.name}
+                loading="lazy"
+                style={{ borderRadius: '50%', objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            </a>
+          </Box>
+        ))}
       </Box>
-      <Typography variant="h3" sx={{
-        fontFamily: 'DM Sans, sans- serif',
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        textTransform: 'uppercase',
-        marginTop: "30px"
-      }}>Episodes</Typography><br></br>
       <div
         style={{
           height: "600px",
