@@ -164,7 +164,8 @@ export const ProfileDetails = ({ token }) => {
             width: '500px',
           }}>
             <Typography variant="h5" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>Favorite Franchise:</Typography>
-            <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics" /><br></br>
+            <a key={profile.franchise?.id} href={`/franchises/${profile.favorite_franchise?.id}`}>
+              <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics" /></a><br></br>
           </Box>
         </Box>
         <Container>
