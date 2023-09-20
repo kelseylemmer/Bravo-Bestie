@@ -152,7 +152,7 @@ export const ProfileDetails = ({ token }) => {
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
             borderRadius: '10px',
             height: '500px',
-            width: '500px'
+            width: '500px',
           }}>
             <Typography variant="h2" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>{profile.display_name}</Typography>
             <img src={profile.picture} alt="profile picture" className="profile-pictures" /> <br></br>
@@ -161,31 +161,45 @@ export const ProfileDetails = ({ token }) => {
           <Box sx={{
             alignItems: 'center',
             height: '500px',
-            width: '500px'
+            width: '500px',
           }}>
             <Typography variant="h5" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>Favorite Franchise:</Typography>
             <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics" /><br></br>
           </Box>
         </Box>
-        <Typography variant="h3" sx={{
-          fontFamily: 'DM Sans, sans- serif',
-          fontWeight: 'bold',
-          fontStyle: 'italic',
-          textTransform: 'uppercase',
-        }}>Episodes Watched:</Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-          {userProfileEpisodes.map((franchise) => (
-            <Box key={franchise.id} sx={{ width: '350px', marginBottom: '20px', marginTop: '20px' }}>
-              <FranchiseBox franchise={franchise} />
+        <Container>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: '50px', marginBottom: '30px' }}>
+              {/* ... */}
             </Box>
-          ))}
-        </Box>
+            {userProfileEpisodes.length > 0 && (  // Conditional rendering based on userProfileEpisodes
+              <>
+                <Typography variant="h3" sx={{
+                  fontFamily: 'DM Sans, sans- serif',
+                  fontWeight: 'bold',
+                  fontStyle: 'italic',
+                  textTransform: 'uppercase',
+                }}>Episodes Watched:</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                  {userProfileEpisodes.map((franchise) => (
+                    <Box key={franchise.id} sx={{ width: '350px', marginBottom: '20px', marginTop: '20px' }}>
+                      <FranchiseBox franchise={franchise} />
+                    </Box>
+                  ))}
+                </Box>
+              </>
+            )}
+          </Box>
+        </Container>
         <Button variant="outlined" color="primary" size="small"
           onClick={() => {
-            navigate({ pathname: "/myProfile/edit" })
+            navigate({ pathname: "/myProfile/edit" });
           }}
-        >Edit Profile</Button>
+        >
+          Edit Profile
+        </Button>
       </Box>
-    </Container >
+    </Container>
   );
+
 }

@@ -66,7 +66,7 @@ export const CastDetails = () => {
           </IconButton>
         )}
       </div>
-      <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif', width: '50%' }}> {castMember.bio} </Typography>
+      <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif', width: '60%' }}> {castMember.bio} </Typography>
     </Box>
   );
 };
