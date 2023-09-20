@@ -60,7 +60,16 @@ export const EditProfile = ({ token }) => {
           noValidate
           autoComplete="off"
         >
-          <Typography variant="h4" component="h2" align="center" marginBottom={"7px"}>
+          <Typography variant="h4" sx={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontWeight: '800',
+            textTransform: 'uppercase'
+          }}></Typography>
+          <Typography variant="h4" align="center" sx={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontWeight: '800',
+            marginBottom: '7px'
+          }}  >
             Edit Profile
           </Typography>
 
