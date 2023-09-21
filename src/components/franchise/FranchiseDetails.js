@@ -49,6 +49,7 @@ export const FranchiseDetails = () => {
     getUserEpisodes().then((data) => setUserProfileEpisodes(data));
   }
 
+
   const addOrRemoveEpisode = (e) => {
     const checkedEpisodeId = parseInt(e.target.value);
     //what is the current state of this checkbox - checked or unchecked
@@ -73,7 +74,6 @@ export const FranchiseDetails = () => {
       }
     }
   }
-
 
 
   // Create a separate function to map over episodes
@@ -101,12 +101,6 @@ export const FranchiseDetails = () => {
     ));
   };
 
-
-  const containerStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
 
   const castContainerStyle = {
     display: "flex",
@@ -142,9 +136,6 @@ export const FranchiseDetails = () => {
     scrollbarWidth: "thin",
     scrollbarColor: "#888 #555",
   };
-
-
-
 
 
   return (<div className="franchise-details">
