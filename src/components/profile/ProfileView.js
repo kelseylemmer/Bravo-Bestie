@@ -111,7 +111,7 @@ export const ProfileDetails = ({ token }) => {
     fontWeight: 'bold',
     fontStyle: 'italic',
     textTransform: 'uppercase',
-    marginLeft: '-70px',
+    marginLeft: '-170px',
   };
 
   const CenteredContainer = {

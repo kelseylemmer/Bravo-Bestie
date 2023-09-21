@@ -157,13 +157,13 @@ export const FranchiseDetails = () => {
               <img
                 src={`${cast.cast.img_url}?w=100&h=100&fit=crop&auto=format`}
                 srcSet={`${cast.cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
-                alt={cast.name}
+                alt={cast.cast.name}
                 loading="lazy"
                 style={{
-                  borderRadius: "50%",
                   objectFit: "cover",
                   width: "100%",
                   height: "100%",
+                  borderRadius: "50%"
                 }}
               />
             </a>

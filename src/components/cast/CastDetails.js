@@ -80,12 +80,12 @@ export const CastDetails = () => {
             marginLeft: '30px',
             marginTop: '50px',
             marginBottom: 2,
-            alignSelf: 'flex-start', // Align the "Books" heading to the left
-          }}>Books:</Typography>
+            alignSelf: 'flex-start',
+          }}>Books</Typography>
           <Box
             sx={{
               display: 'flex',
-              marginLeft: '30px', // Add left margin to the books section
+              marginLeft: '30px',
             }}
           >
             {books.map((book) => (
