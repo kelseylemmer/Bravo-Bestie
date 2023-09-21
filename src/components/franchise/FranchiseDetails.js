@@ -62,7 +62,7 @@ export const FranchiseDetails = () => {
       newUserProfileEpisodes()
       newProfileEpisodes()
     } else {
-      //if unchecked DELETE operation to API and send pk ----HOW DO WE GET THE PK!!!!!!!!!!!!!!!!!!!!!
+      //if unchecked DELETE operation to API and send pk 
       for (const userProfileEpisode of userProfileEpisodes) {
         if (userProfileEpisode.episode.id === checkedEpisodeId) {
           deleteProfileEpisode(userProfileEpisode.id);
@@ -102,108 +102,112 @@ export const FranchiseDetails = () => {
   };
 
 
+  const containerStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const castContainerStyle = {
+    display: "flex",
+    overflowX: "auto",
+    flexDirection: "row",
+    height: "250px"
+
+  };
+
+  const castBoxStyle = {
+    width: "200px",
+    height: "200px",
+    marginX: "8px",
+    borderRadius: "50%",
+    flex: "0 0 auto",
+  };
+
+  const titleStyle = {
+    fontFamily: "DM Sans, sans-serif",
+    fontWeight: "bold",
+    fontStyle: "italic",
+    textTransform: "uppercase",
+    marginTop: "30px",
+    marginBottom: "30px",
+    marginLeft: "30px",
+  };
+
+  const episodeContainerStyle = {
+    height: "600px",
+    overflowY: "auto",
+    borderRadius: "10px",
+    padding: "16px",
+    scrollbarWidth: "thin",
+    scrollbarColor: "#888 #555",
+  };
 
 
-  return (
-    <div className="franchise-details">
-      <div style={{ width: "100%", overflowX: "scroll" }}>
-        <img
-          src={franchiseDetails?.banner_image}
-          alt="franchise picture"
-          style={{ width: "100%" }}
-        />
-      </div>
-      <Box sx={{ display: 'flex', overflowX: 'auto', flexDirection: 'column' }}>
-        <Typography variant="h3" sx={{
-          fontFamily: 'DM Sans, sans- serif',
-          fontWeight: 'bold',
-          fontStyle: 'italic',
-          textTransform: 'uppercase',
-          marginTop: '30px',
-          marginBottom: '30px',
-          marginLeft: '30px',
-        }}>Cast</Typography><br></br>
-        <Box
-          sx={{
-            display: 'flex',
-            overflowX: 'auto',
-            flexDirection: 'row',
-            height: '220px',
-            marginBottom: '20px',
 
-          }}
-        >
-          {franchiseCast.map((cast) => (
-            <Box
-              key={cast.id}
-              sx={{
-                width: '200px',
-                height: '200px',
-                marginX: '8px',
-                borderRadius: '50%',
-                flex: '0 0 auto',
-              }}
-            >
-              <a key={cast.id} href={`/cast/${cast.cast.id}`}>
-                <img
-                  src={`${cast.cast.img_url}?w=100&h=100&fit=crop&auto=format`}
-                  srcSet={`${cast.cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
-                  alt={cast.name}
-                  loading="lazy"
-                  style={{
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                    width: '100%',
-                    height: '100%',
-                  }}
-                />
-              </a>
-            </Box>
-          ))}
-        </Box>
+
+
+  return (<div className="franchise-details">
+    <div style={{ width: "100%", overflowX: "scroll" }}>
+      <img
+        src={franchiseDetails?.banner_image}
+        alt="franchise picture"
+        style={{ width: "100%" }}
+      />
+    </div>
+    <Box sx={{ display: 'Flex', flexDirection: 'column' }}>
+      <Typography variant="h3" sx={titleStyle}>
+        Cast
+      </Typography>
+      <Box sx={castContainerStyle}>
+        {franchiseCast.map((cast) => (
+          <Box key={cast.id} sx={castBoxStyle}>
+            <a key={cast.id} href={`/cast/${cast.cast.id}`}>
+              <img
+                src={`${cast.cast.img_url}?w=100&h=100&fit=crop&auto=format`}
+                srcSet={`${cast.cast.img_url}?w=200&h=200&fit=crop&auto=format&dpr=2 2x`}
+                alt={cast.name}
+                loading="lazy"
+                style={{
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </a>
+          </Box>
+        ))}
       </Box>
-      <Typography variant="h3" sx={{
-        fontFamily: 'DM Sans, sans- serif',
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        textTransform: 'uppercase',
-        marginTop: '30px',
-        marginBottom: '30px',
-        marginLeft: '30px',
-      }}>Episodes</Typography><br></br>
-      <div
-        style={{
-          height: "600px",
-          overflowY: "auto",
-          borderRadius: "10px",
-          padding: "16px",
-          scrollbarWidth: "thin",
-          scrollbarColor: "#888 #555",
-        }}
-      >
-        <Container maxWidth="lg">
-          {seasons.map((season) => (
-            <Accordion key={season.id}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontFamily: "DM Sans, sans- serif",
-                    fontWeight: "bold",
-                    textTransform: 'uppercase'
-                  }}
-                >
-                  Season {season.season_number}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails x={{ fontFamily: 'DM Sans, sans- serif', marginLeft: '150px' }}>check box to add or remove from watched</AccordionDetails>
-              <AccordionDetails>
-                {renderEpisodes(season)}
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </Container>
-      </div>
-    </div >
+    </Box>
+    <Typography variant="h3" sx={titleStyle}>
+      Episodes
+    </Typography>
+    <br></br>
+    <div style={episodeContainerStyle}>
+      <Container maxWidth="lg">
+        {seasons.map((season) => (
+          <Accordion key={season.id}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontFamily: "DM Sans, sans-serif",
+                  fontWeight: "bold",
+                  textTransform: "uppercase",
+                }}
+              >
+                Season {season.season_number}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails x={{ fontFamily: "DM Sans, sans-serif", marginLeft: "150px" }}>
+              check box to add or remove from watched
+            </AccordionDetails>
+            <AccordionDetails>{renderEpisodes(season)}</AccordionDetails>
+          </Accordion>
+        ))}
+      </Container>
+    </div>
+  </div>
   );
-};
+}
