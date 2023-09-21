@@ -1,66 +1,122 @@
-import { useRef, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { loginUser } from "../../managers/AuthManager"
+import React, { useRef, useState } from 'react';
+import { Button, Container, TextField, Typography, Grid } from '@mui/material';
+import { loginUser } from '../../managers/AuthManager';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 export const Login = ({ setToken }) => {
-  const email = useRef()
-  const password = useRef()
-  const navigate = useNavigate()
-  const [isUnsuccessful, setIsUnsuccessful] = useState(false)
+  const email = useRef();
+  const password = useRef();
+  const navigate = useNavigate();
+  const [isUnsuccessful, setIsUnsuccessful] = useState(false);
+
+  const containerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '100vh',
+  };
+
+  const formStyle = {
+    width: '100%',
+    maxWidth: '400px',
+    padding: '20px',
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  const titleStyle = {
+    marginBottom: '16px',
+    fontFamily: 'DM Sans, sans- serif',
+    fontWeight: 'bold'
+  };
+
+  const submitButtonStyle = {
+    marginTop: '16px',
+  };
+
+  const errorTextStyle = {
+    color: 'red',
+  };
 
   const handleLogin = (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
 
     const user = {
       email: email.current.value,
-      password: password.current.value
-    }
+      password: password.current.value,
+    };
 
-    loginUser(user).then(res => {
-      if ("valid" in res && res.valid) {
-        setToken(res.token)
-        navigate("/")
+    loginUser(user).then((res) => {
+      if ('valid' in res && res.valid) {
+        setToken(res.token);
+        navigate('/');
+      } else {
+        setIsUnsuccessful(true);
       }
-      else {
-        setIsUnsuccessful(true)
-      }
-    })
-  }
+    });
+  };
 
   return (
-    <section className="columns is-centered">
-      <form className="column is-two-thirds" onSubmit={handleLogin}>
-        <h1 className="title">Bravo Bestie</h1>
-        <p className="subtitle">Please sign in</p>
+    <Container component="main" maxWidth="md" style={containerStyle}>
+      <form style={formStyle} onSubmit={handleLogin}>
+        <Typography variant="h4" component="h1" style={titleStyle} >
+          Bravo Bestie
+        </Typography>
+        <Typography variant="subtitle1" sx={{ fontFamily: "DM Sans, sans-serif" }}>Please sign in</Typography>
 
-        <div className="field">
-          <label className="label">Email</label>
-          <div className="control">
-            {/* Make sure the ref is assigned to the input element */}
-            <input className="input" type="email" ref={email} />
-          </div>
-        </div>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email"
+          inputRef={email}
+          type="email"
+        />
 
-        <div className="field">
-          <label className="label">Password</label>
-          <div className="control">
-            <input className="input" type="password" ref={password} />
-          </div>
-        </div>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="password"
+          label="Password"
+          inputRef={password}
+          type="password"
+        />
 
-        <div className="field is-grouped">
-          <div className="control">
-            <button className="button is-link" type="submit">Submit</button>
-          </div>
-          <div className="control">
-            <Link to="/register" className="button is-link is-light">Not yet a Bravo Bestie? Register here!</Link>
-          </div>
-        </div>
-        {
-          isUnsuccessful ? <p className="help is-danger">Username or password not valid</p> : ''
-        }
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          style={submitButtonStyle}
+        >
+          Submit
+        </Button>
+
+        <Grid container justifyContent="center">
+          <Grid item>
+            <Link to="/register" variant="body2">
+              Not yet a Bravo Bestie? Register here!
+            </Link>
+          </Grid>
+        </Grid>
+
+        {isUnsuccessful && (
+          <Typography variant="body2" style={errorTextStyle}>
+            Username or password not valid
+          </Typography>
+        )}
       </form>
-    </section>
-  )
-}
+    </Container>
+  );
+};
+

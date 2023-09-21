@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getCurrentUserEpisodes } from "../../managers/ProfileEpisodeManager";
 import { getCurrentUserProfile } from "../../managers/ProfileManager";
 import "./profile.css";
@@ -117,13 +117,13 @@ export const ProfileDetails = ({ token }) => {
     return (
       <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
         <CardContent>
-          <Typography variant="h4" sx={{
+          <Link to={`/franchises/${franchise.id}`} style={{ textDecoration: 'none', color: 'black' }}><Typography variant="h4" sx={{
             fontFamily: 'DM Sans, sans-serif',
             fontWeight: '800',
             textTransform: 'uppercase'
           }}>
             {franchise.label}
-          </Typography>
+          </Typography></Link>
           <SeasonAccordion seasons={franchise.seasons} />
           <Typography variant="h6" sx={{
             fontFamily: 'DM Sans, sans-serif',
