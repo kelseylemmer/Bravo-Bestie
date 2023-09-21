@@ -3,18 +3,20 @@ import { Link, useParams } from "react-router-dom";
 import { getCastById } from "../../managers/CastManager";
 import { Container, Typography, Box, IconButton } from "@mui/material";
 import { Instagram, Twitter } from "@mui/icons-material";
-
-
-
-
+import { getBooksByCastId } from "../../managers/BookManager";
 
 
 export const CastDetails = () => {
   const { id } = useParams();
   const [castMember, setCastMember] = useState({});
+  const [books, setBooks] = useState([])
 
   useEffect(() => {
     getCastById(id).then((data) => setCastMember(data));
+  }, [id]);
+
+  useEffect(() => {
+    getBooksByCastId(id).then((data) => setBooks(data));
   }, [id]);
 
   return (
@@ -67,6 +69,53 @@ export const CastDetails = () => {
         )}
       </div>
       <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif', width: '60%' }}> {castMember.bio} </Typography>
+      {books.length > 0 && (
+        <>
+          <Typography variant='h2' sx={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            textTransform: 'uppercase',
+            marginLeft: '30px',
+            marginTop: '50px',
+            marginBottom: 2,
+            alignSelf: 'flex-start', // Align the "Books" heading to the left
+          }}>Books:</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              marginLeft: '30px', // Add left margin to the books section
+            }}
+          >
+            {books.map((book) => (
+              <Box
+                key={book.id}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center', // Center book and title
+                  width: '350px',
+                  marginRight: '20px', // Add some right margin to separate books
+                }}
+              >
+                <img src={book.img_url} alt="franchise-photo" className="franchise-pics" />
+                <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif' }}>
+                  {book.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontFamily: 'DM Sans, sans-serif',
+                    color: 'gray', // Add some styling to book description (optional)
+                  }}
+                >
+                  {book.description}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </>
+      )}
     </Box>
   );
-};
+}
