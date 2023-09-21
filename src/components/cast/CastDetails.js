@@ -4,6 +4,7 @@ import { getCastById } from "../../managers/CastManager";
 import { Container, Typography, Box, IconButton } from "@mui/material";
 import { Instagram, Twitter } from "@mui/icons-material";
 import { getBooksByCastId } from "../../managers/BookManager";
+import "./cast.css";
 
 
 export const CastDetails = () => {
@@ -93,24 +94,20 @@ export const CastDetails = () => {
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center', // Center book and title
+                  alignItems: 'center',
                   width: '350px',
-                  marginRight: '20px', // Add some right margin to separate books
+                  marginRight: '20px',
+
                 }}
               >
-                <img src={book.img_url} alt="franchise-photo" className="franchise-pics" />
-                <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  {book.title}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: 'DM Sans, sans-serif',
-                    color: 'gray', // Add some styling to book description (optional)
-                  }}
-                >
-                  {book.description}
-                </Typography>
+                <Link to={`/books/${book.id}`} style={{ textDecoration: 'none' }}>
+                  <div>
+                    <img src={book.img_url} alt="franchise-photo" className="franchise-pics book-container" />
+                    <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif', color: 'black', fontWeight: 'bold' }} className="book-title">
+                      {book.title}
+                    </Typography>
+                  </div>
+                </Link>
               </Box>
             ))}
           </Box>
