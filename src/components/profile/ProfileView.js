@@ -114,7 +114,6 @@ export const ProfileDetails = ({ token }) => {
 
     const episodeCount = calculateEpisodeCount(franchise);
 
-
     return (
       <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
         <CardContent>
@@ -165,13 +164,12 @@ export const ProfileDetails = ({ token }) => {
           }}>
             <Typography variant="h5" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>Favorite Franchise:</Typography>
             <a key={profile.franchise?.id} href={`/franchises/${profile.favorite_franchise?.id}`}>
-              <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics" /></a><br></br>
+              <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics hover-container" /></a><br></br>
           </Box>
         </Box>
         <Container>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: '50px', marginBottom: '30px' }}>
-              {/* ... */}
             </Box>
             {userProfileEpisodes.length > 0 && (  // Conditional rendering based on userProfileEpisodes
               <>

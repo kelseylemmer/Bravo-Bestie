@@ -102,7 +102,7 @@ export const CastDetails = () => {
               >
                 <Link to={`/books/${book.id}`} style={{ textDecoration: 'none' }}>
                   <div>
-                    <img src={book.img_url} alt="franchise-photo" className="franchise-pics book-container" />
+                    <img src={book.img_url} alt="franchise-photo" className="franchise-pics hover-container" />
                     <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif', color: 'black', fontWeight: 'bold' }} className="book-title">
                       {book.title}
                     </Typography>

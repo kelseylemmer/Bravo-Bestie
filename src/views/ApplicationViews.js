@@ -9,6 +9,7 @@ import { EditProfile } from "../components/profile/EditProfile";
 import { FranchiseList } from "../components/franchise/FranchiseList";
 import { Home } from "../components/home/home";
 import { CastDetails } from "../components/cast/CastDetails";
+import { BookDetails } from "../components/book/BookDetails";
 
 
 
@@ -32,6 +33,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path="edit" element={<EditProfile token={token} setToken={setToken} />} />
           </Route>
           <Route path="/cast/:id" element={<CastDetails />} />
+          <Route path="/books/:id" element={<BookDetails />} />
         </Route>
       </Routes>
     </>

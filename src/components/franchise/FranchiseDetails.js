@@ -196,6 +196,7 @@ export const FranchiseDetails = () => {
                   Season {season.season_number}
                 </Typography>
               </AccordionSummary>
+              <AccordionDetails x={{ fontFamily: 'DM Sans, sans- serif', marginLeft: '150px' }}>check box to add or remove from watched</AccordionDetails>
               <AccordionDetails>
                 {renderEpisodes(season)}
               </AccordionDetails>
