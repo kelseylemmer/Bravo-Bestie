@@ -64,6 +64,72 @@ export const ProfileDetails = ({ token }) => {
       });
   }, []);
 
+  const cardStyle = {
+    height: '400px',
+    overflow: 'auto',
+    border: '1px solid',
+  };
+
+  const franchiseTitleStyle = {
+    fontFamily: 'DM Sans, sans-serif',
+    fontWeight: '800',
+    textTransform: 'uppercase',
+  };
+
+  const episodeCountStyle = {
+    fontFamily: 'DM Sans, sans-serif',
+    fontWeight: '800',
+    color: 'blue',
+    marginLeft: '20px',
+  };
+
+  const profileBoxStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+    borderRadius: '10px',
+    height: '500px',
+    width: '500px',
+  };
+
+  const favoriteFranchiseStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: '500px',
+    width: '500px',
+  };
+
+  const headerTextStyle = {
+    fontFamily: 'DM Sans, sans-serif',
+    fontWeight: '800',
+  };
+
+  const episodesWatchedStyle = {
+    fontFamily: 'DM Sans, sans-serif',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    textTransform: 'uppercase',
+    marginLeft: '-70px',
+  };
+
+  const CenteredContainer = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '100vh',
+    marginTop: '50px'
+  };
+
+  const ContentContainer = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginLeft: '30px'
+  }
+
 
   const EpisodeList = ({ episodes }) => {
     return (
@@ -110,27 +176,20 @@ export const ProfileDetails = ({ token }) => {
     });
     return episodeCount;
   };
-  const FranchiseBox = ({ franchise }) => {
 
+  const FranchiseBox = ({ franchise }) => {
     const episodeCount = calculateEpisodeCount(franchise);
 
     return (
-      <Card style={{ height: '400px', overflow: 'auto', border: '1px solid' }}>
+      <Card style={cardStyle}>
         <CardContent>
-          <Link to={`/franchises/${franchise.id}`} style={{ textDecoration: 'none', color: 'black' }}><Typography variant="h4" sx={{
-            fontFamily: 'DM Sans, sans-serif',
-            fontWeight: '800',
-            textTransform: 'uppercase'
-          }}>
-            {franchise.label}
-          </Typography></Link>
+          <Link to={`/franchises/${franchise.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <Typography variant="h4" sx={franchiseTitleStyle}>
+              {franchise.label}
+            </Typography>
+          </Link>
           <SeasonAccordion seasons={franchise.seasons} />
-          <Typography variant="h6" sx={{
-            fontFamily: 'DM Sans, sans-serif',
-            fontWeight: '800',
-            color: 'blue',
-            marginLeft: '20 px'
-          }}>
+          <Typography variant="h6" sx={episodeCountStyle}>
             <span sx={{ fontWeight: 'bold' }}>episodes watched:</span> {episodeCount}
           </Typography>
         </CardContent>
@@ -138,47 +197,29 @@ export const ProfileDetails = ({ token }) => {
     );
   };
 
-
-
   return (
-    <Container>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: '50px', marginBottom: '30px' }}>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-            borderRadius: '10px',
-            height: '500px',
-            width: '500px',
-          }}>
-            <Typography variant="h2" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>{profile.display_name}</Typography>
+    <Container sx={CenteredContainer}>
+      <Box sx={ContentContainer}>
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Box sx={profileBoxStyle}>
+            <Typography variant="h2" sx={headerTextStyle}>{profile.display_name}</Typography>
             <img src={profile.picture} alt="profile picture" className="profile-pictures" /> <br></br>
             <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans- serif' }}>{profile.bio}</Typography>
           </Box>
-          <Box sx={{
-            alignItems: 'center',
-            height: '500px',
-            width: '500px',
-          }}>
-            <Typography variant="h5" sx={{ fontFamily: 'DM Sans, sans- serif', fontWeight: '800' }}>Favorite Franchise:</Typography>
+          <Box sx={favoriteFranchiseStyle}>
+            <Typography variant="h5" sx={headerTextStyle}>Favorite Franchise:</Typography>
             <a key={profile.franchise?.id} href={`/franchises/${profile.favorite_franchise?.id}`}>
-              <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics hover-container" /></a><br></br>
+              <img src={profile?.favorite_franchise?.list_image} alt="franchise-photo" className="franchise-pics hover-container" />
+            </a><br></br>
           </Box>
         </Box>
         <Container>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: '50px', marginBottom: '30px' }}>
             </Box>
-            {userProfileEpisodes.length > 0 && (  // Conditional rendering based on userProfileEpisodes
+            {userProfileEpisodes.length > 0 && (
               <>
-                <Typography variant="h3" sx={{
-                  fontFamily: 'DM Sans, sans- serif',
-                  fontWeight: 'bold',
-                  fontStyle: 'italic',
-                  textTransform: 'uppercase',
-                }}>Episodes Watched:</Typography>
+                <Typography variant="h3" sx={episodesWatchedStyle}>Episodes Watched</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                   {userProfileEpisodes.map((franchise) => (
                     <Box key={franchise.id} sx={{ width: '350px', marginBottom: '20px', marginTop: '20px' }}>
@@ -190,15 +231,10 @@ export const ProfileDetails = ({ token }) => {
             )}
           </Box>
         </Container>
-        <Button variant="outlined" color="primary" size="small"
-          onClick={() => {
-            navigate({ pathname: "/myProfile/edit" });
-          }}
-        >
+        <Button variant="outlined" color="primary" size="small" onClick={() => navigate({ pathname: "/myProfile/edit" })}>
           Edit Profile
         </Button>
       </Box>
     </Container>
   );
-
 }
