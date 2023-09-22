@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Container, Typography, Box, IconButton, Paper, Avatar, Button } from "@mui/material";
+import { Container, Typography, Box, IconButton, Paper, Avatar, Button, FormControl, TextField } from "@mui/material";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { getBookById } from "../../managers/BookManager";
 import { createReview, getReviewByBookId } from "../../managers/ReviewManager";
@@ -37,14 +37,17 @@ export const BookDetails = () => {
   };
 
   const handleReviewSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const review = {
       review: currentReview.review,
       book: parseInt(id),
-    }
-    // Send POST request to your API
+    };
+
     createReview(review)
-      .then(() => updateReviews())
+      .then(() => {
+        setCurrentReview({ review: "", book: 0 });
+        updateReviews();
+      });
   };
 
   const reviewStyle = {
@@ -189,25 +192,29 @@ export const BookDetails = () => {
       <Paper style={reviewStyle} elevation={3}>
         <Typography>add your review</Typography>
         <form>
-          <fieldset>
-            <div className="form-group">
-              <textarea
-                name="review"
-                required autoFocus
-                className="form-control"
-                value={currentReview.review}
-                onChange={changeReviewState}
-              />
-            </div>
-          </fieldset>
+          <FormControl sx={{ width: '90%' }}>
+            <TextField
+              name="review"
+              required
+              multiline
+              rows={4}
+              placeholder="Write your review here"
+              variant="outlined"
+              value={currentReview.review}
+              onChange={changeReviewState}
+              style={{ marginBottom: '16px', width: '1120px' }}
+
+            />
+          </FormControl>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={handleReviewSubmit}
+          >
+            Submit Review
+          </Button>
         </form>
-        <Button
-          variant="outlined"
-          fullWidth
-          onClick={handleReviewSubmit}
-        >
-          Submit Review
-        </Button>
       </Paper>
     </Container >
   );
