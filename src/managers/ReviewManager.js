@@ -19,3 +19,13 @@ export const createReview = (review) => {
     body: JSON.stringify(review)
   }).then(res => res.json())
 }
+
+export const deleteProfileEpisode = (checkedEpisodeId) => {
+
+  return fetch(`http://localhost:8000/reviews`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    },
+  })
+}

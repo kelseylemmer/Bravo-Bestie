@@ -33,7 +33,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path="edit" element={<EditProfile token={token} setToken={setToken} />} />
           </Route>
           <Route path="/cast/:id" element={<CastDetails />} />
-          <Route path="/books/:id" element={<BookDetails />} />
+          <Route path="/books/:id" element={<BookDetails token={token} />} />
         </Route>
       </Routes>
     </>

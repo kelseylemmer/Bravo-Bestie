@@ -9,7 +9,7 @@ import "./book.css";
 
 
 
-export const BookDetails = () => {
+export const BookDetails = ({ token }) => {
   const { id } = useParams();
   const [book, setBook] = useState({})
   const [reviews, setReviews] = useState([])
@@ -77,10 +77,12 @@ export const BookDetails = () => {
   };
 
   const avatarStyle = {
-    width: '48px', // Set the desired avatar size
-    height: '48px', // Set the desired avatar size
-    marginRight: '16px', // Add margin to create space between avatar and text
+    width: '48px',
+    height: '48px',
+    marginRight: '16px',
   };
+
+
 
 
   return (
@@ -203,7 +205,6 @@ export const BookDetails = () => {
               value={currentReview.review}
               onChange={changeReviewState}
               style={{ marginBottom: '16px', width: '1120px' }}
-
             />
           </FormControl>
           <Button
