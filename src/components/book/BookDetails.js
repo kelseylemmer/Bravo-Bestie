@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Container, Typography, Box, IconButton, Paper, Avatar, Button, FormControl, TextField } from "@mui/material";
+import { Container, Typography, Box, IconButton, Paper, Avatar, Button, FormControl, TextField, Snackbar } from "@mui/material";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import CloseIcon from "@mui/icons-material/Close";
 import { getBookById } from "../../managers/BookManager";
 import { createReview, getReviewByBookId } from "../../managers/ReviewManager";
 import "./book.css";
-
-
 
 
 export const BookDetails = ({ token }) => {
@@ -14,7 +13,12 @@ export const BookDetails = ({ token }) => {
   const [book, setBook] = useState({})
   const [reviews, setReviews] = useState([])
   const [currentReview, setCurrentReview] = useState({ review: "", book: 0 })
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
+  const handleSnackbarClose = () => {
+    setIsSnackbarOpen(false);
+  };
 
   useEffect(() => {
     getBookById(id).then((data) => setBook(data));
@@ -47,6 +51,8 @@ export const BookDetails = ({ token }) => {
       .then(() => {
         setCurrentReview({ review: "", book: 0 });
         updateReviews();
+        setSnackbarMessage("Thanks for submitting your review! <3");
+        setIsSnackbarOpen(true);
       });
   };
 
@@ -217,6 +223,26 @@ export const BookDetails = ({ token }) => {
           </Button>
         </form>
       </Paper>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={isSnackbarOpen}
+        autoHideDuration={2000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+        action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      />
     </Container >
   );
 }
