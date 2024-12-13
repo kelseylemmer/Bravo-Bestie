@@ -1,7 +1,7 @@
 # Application Overview
 Bravo Bestie is a dynamic social media-style web application for super fans of Bravo shows like The Real Housewives, Summerhouse, etc. The app allows users to document their interactions with the Bravoverse by tracking episodes watched, products consumed, iconic locations visited all while leaving ratings and reviews. Users can create personalized profiles and engage with other users. The application was designed to align with the aesthetic and branding of the official NBC Bravo website.
 # Technologies Used
-<img src="https://skillicons.dev/icons?i=javascript,py,html,css,django,react,git" />
+<img src="https://skillicons.dev/icons?i=javascript,html,css,react,py,django,git" />
  
 
 # To Get Started
