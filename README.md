@@ -11,7 +11,7 @@ Bravo Bestie is a dynamic social media-style web application for super fans of B
 
 **Client Side**
 1. Clone the repo and run `npm install` to install all dependencies
-2. Run `npm start` to start the development server
+2. Run `npm start` 
 
 # ERD
 🔗 [https://dbdiagram.io/d/64e90c6902bd1c4a5e6d3f3e](https://dbdiagram.io/d/Final-Capstone-64ea1f6c02bd1c4a5e73dcde)
